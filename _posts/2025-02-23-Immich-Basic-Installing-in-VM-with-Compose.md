@@ -27,7 +27,7 @@ bash
    
 `lsb_release -a`
 
-✅ **Expected Output:**
+**Expected Output:**
 
    
 `Distributor ID: Ubuntu`  
@@ -192,9 +192,11 @@ bash
 
 #### **1️⃣ Open Immich in a Web Browser**
 
-[`http://immich-vm:2283`](http://immich-vm:2283) `- or http://immich-vm-ip:2283`
+```
+(http://immich-vm:2283) 
+```
 
-✅ **Expected Result:** You should see the **Admin Registration page**.
+**Expected Result:** You should see the **Admin Registration page**.
 
 #### **2️⃣ Register the Admin Account**
 
@@ -202,7 +204,7 @@ bash
 * **Password:** (Set a secure password)  
 * **Email:** (Choose any admin email)  
 * **First Name / Last Name:** (Optional)  
-  ✅ **Click "Register."**
+* **Click "Register."**
 
 ###  **Step 6: Upload a Test Photo**
 
@@ -222,7 +224,7 @@ bash
    
 `ls -lah ~/immich/docker/library/upload/`
 
-✅ **If the file appears here, Immich is working\!** 🎉
+**If the file appears here, Immich is working\!** 🎉
 
 ---
 
@@ -237,9 +239,9 @@ bash
 
 ---
 
-### **✅ Phase I Completed\!**
+### **Phase I Completed\!**
 
-🚀 **Immich was successfully installed and tested with a basic upload.**  
-📌 **At this point, Immich was still using the default upload location (`./library/upload/`).**  
-⏭️ **Phase II began when we switched to external storage (`/mnt/immich-storage`).**
+**Immich was successfully installed and tested with a basic upload.**  
+**At this point, Immich was still using the default upload location (`./library/upload/`).**  
+**Phase II began when we switched to external storage (`/mnt/immich-storage`).**
 
