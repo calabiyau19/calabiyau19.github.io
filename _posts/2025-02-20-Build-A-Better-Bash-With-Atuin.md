@@ -3,6 +3,8 @@ layout: post
 title: "Build a Better Bash with Atuin"
 date:  2025-02-21
 ---
+##Needs to to be updated so the Autocomplete works in Fish 
+
 
 ### **Step-by-Step Plan for Setting Up Bash Completion and Atuin in New VMs**
 
