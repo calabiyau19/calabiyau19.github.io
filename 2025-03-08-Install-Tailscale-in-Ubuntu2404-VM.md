@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: "Add Tailscale to Ubuntu 24.04 VM"
