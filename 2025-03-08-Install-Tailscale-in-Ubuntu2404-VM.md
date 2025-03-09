@@ -1,3 +1,10 @@
+
+---
+layout: post
+title: "Add Tailscale to Ubuntu 24.04 VM"
+date:  2025-03-09
+---
+
 ### How to add Tailscale to a Ubuntu VM
 
 Ubuntu 24.04 (Noble Numbat)
