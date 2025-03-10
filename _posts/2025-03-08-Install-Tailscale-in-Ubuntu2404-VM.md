@@ -10,25 +10,25 @@ Ubuntu 24.04 (Noble Numbat)
 
 #### Add Tailscale's GPG key
 
-```
+```ruby
 sudo mkdir -p --mode=0755 /usr/share/keyrings
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
 ```
 #### Add the tailscale repository
 
-```
+```ruby
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
 ```
 
 #### Install Tailscale
 
-```
+```ruby
 sudo apt-get update && sudo apt-get install tailscale
 ```
 
 #### Start Tailscale!
 
-```
+```ruby
 sudo tailscale up
 ```
 
