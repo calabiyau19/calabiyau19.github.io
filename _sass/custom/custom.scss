@@ -1,0 +1,24 @@
+/* Custom styling for code blocks in Chirpy */
+pre, code {
+    background-color: #1e1e1e !important; /* Dark background */
+    color: #e6e6e6 !important; /* Light text */
+    font-family: "Fira Code", "Courier New", monospace !important;
+    font-size: 14px;
+    border-radius: 6px;
+    padding: 12px;
+    overflow-x: auto;
+  }
+  
+  /* Ensure line numbers display correctly */
+  .highlight {
+    background: #1e1e1e !important;
+    color: #e6e6e6 !important;
+  }
+  
+  /* Prevent code from overflowing */
+  pre code {
+    display: block;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+  
