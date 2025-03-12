@@ -7,11 +7,11 @@ date:  2025-03-07
 Scenario:  												
 
 Immich is running in a Proxmox server VM and has not been updated since v126.1.  I have been using Watchtower to update my other docker apps, but since Immich is moving so fast, I wanted to take the time to do it manually.  Now, I need to update it to v129. This is a docker-compose installation.    
-The Proxmox server has two internal NVMe SSDs.  Immich is on NVMe1, and the Immich processed images library is on NVMe 2. Which is a custom location, not in the defaults. All of my media was uploaded to Immich from an external HDD plugged into the Proxmox server and then mounted so that IMMICH-Go could find it inside the VM/container, which saved a tremendous amount of time uploading and processing 25K pictures and movies.  With this setup, the built-in upload function also works as designed for smaller uploads.  
+The Proxmox server has two internal NVMe SSDs.  Immich is on NVMe1, and the Immich processed images library is on NVMe 2. Which is a custom location, not in the defaults. All of my media was uploaded to Immich from an external HDD plugged into the Proxmox server and then mounted so that Immich-Go could find it inside the VM/container, which saved a tremendous amount of time uploading and processing 25K pictures and movies.  With this setup, the built-in upload function also works as designed for smaller uploads.  
 
 Steps followed to complete the update.
 
-1) I read the release notes and determined it **would** break my external HDD upload location, but only one single line of code was originally added to my working docker-composec.yml file so it could be entered back into the “new” docker-compose.yml after the upgrade was complete. The original .env file could be used without any changes.    
+1) I read the release notes and determined it **would** break my external HDD upload location, but only one single line of code was originally added to my working docker-compose.yml file so it could be entered back into the “new” docker-compose.yml after the upgrade was complete. The original .env file could be used without any changes.    
 [https://github.com/immich-app/immich/releases/tag/v1.129.0](https://github.com/immich-app/immich/releases/tag/v1.129.0)
 
 2) found this was not a breaking change  
