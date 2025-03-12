@@ -19,41 +19,41 @@ Steps followed to complete the update.
 
 3) full backup using Proxmox backup tools  
 4) backup current files  
-```  
+```sh
 cp docker-compose.yml docker-compose.custom-backup.yml  
 cp .env .env.custom-backup  
 ```  
 5) reset docker-compose.yml  
-```  
+```sh  
 git restore docker-compose.yml  
 ```  
 6) verify it was reset - I had an ownership and permission error here on my immich/docker location that I had to fix before running this command without error and continuing   
-```  
+```sh  
 git status
 
 ```  
 7) switch to the main branch (and found out I was 147 commits behind and NOT on the main branch after my last attempt at an update).    
-```  
+```sh  
 git checkout main  
 ```  
 8) pull the latest changes  
-```  
+```sh  
 git pull  
 ```  
 9) switch to the Latest Release (v1.129.0)  
-```  
+```sh  
 git checkout $(git describe --tags $(git rev-list --tags --max-count=1))  
 ```  
 10) pull the latest docker images  
-```  
+```sh  
 docker compose pull  
 ```  
 11) restart Immich with updated version  
-```  
+```sh  
 docker compose up -d  
 ```  
 12) verify all containers are running  
-```  
+```sh  
 docker ps -a  
 ```  
 13) Run test uploads.  
