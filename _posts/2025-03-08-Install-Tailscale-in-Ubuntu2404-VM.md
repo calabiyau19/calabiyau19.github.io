@@ -17,21 +17,21 @@ curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.noarmor.gpg | sudo tee
 
 #### Add the tailscale repository
 
-```bash
+{% highlight ruby %}
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
-```
+{% endhighlight %}
 
 #### Install Tailscale
 
-```bash
+{% highlight ruby %}
 sudo apt-get update && sudo apt-get install tailscale
-```
+{% endhighlight %}
 
 #### Start Tailscale!
 
-```bash
+{% highlight ruby %}
 sudo tailscale up
-```
+{% endhighlight %}
 
 #### Login to Tailscale account and accept connection
 ##### Done
