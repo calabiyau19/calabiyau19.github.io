@@ -6,7 +6,7 @@ date:  2025-03-08
 
 ### How to add Tailscale to a Ubuntu VM
 
-Ubuntu 24.04 (Noble Numbat)
+Ubuntu 24.04 server running a single VM
 
 #### Add Tailscale's GPG key
 
