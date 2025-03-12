@@ -16,7 +16,7 @@ timezone:
 
 title: Pontifex # the main title
 
-tagline: Information Bridge Builder # it will display as the subtitle
+tagline: Building Bridges # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
