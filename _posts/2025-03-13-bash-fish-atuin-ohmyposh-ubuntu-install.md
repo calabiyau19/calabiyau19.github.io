@@ -45,7 +45,7 @@ NOTE: This has been more helpful to me than the basic bash [tab][tab] completion
 
 **UPDATE & CORRECTION:**
 
-Bash does not have an add-on allowing auto-suggestion at the prompt like Fish does. This is the final word on this matter. Period.
+Bash does not have an add-on for adding auto-suggestion to the prompt like Fish does. 
 
 ---
 ## **FISH**
