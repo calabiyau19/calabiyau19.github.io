@@ -25,7 +25,7 @@ I also quickly realized that the amount of detail needed to document everything 
 
 In the beginning, I relied on notecards (a system I’d used at work) and text files. But I quickly outgrew these methods. To keep track of everything, I moved to Google Docs, Google Keep, and Google Sheets for organization. Eventually, I integrated a program called **Taiga** to help with the management of tasks, projects and ideas I was either working on or wanted to learn about and then work on and implement. While I plan to transition away from the Google tools in the future, they currently allowed me to easily dictate and document my notes—thanks to **Whisper AI**, a voice-to-text app that has been invaluable in speeding up my writing process.
 
-With Whisper AI, combined with **ChatGPT**, I can quickly record my thoughts, generate more complex content, and easily refer back to previous conversations. This system has helped me streamline my workflow and make the process of documenting my learning more efficient.
+With Whisper AI, combined with ChatGPT, I can quickly record my thoughts, generate more complex content, and easily refer back to previous conversations. This system has helped me streamline my workflow and make the process of documenting my learning more efficient.
 
 At this point in time, I'm starting to settle down a little bit from the absolute shotgun approach that I took for the first six months and deluge of information and knowledge I consumed. And now I'm kind of going back and revisiting everything I've done, but understanding it at a much more detailed level than I did initially. 
 
