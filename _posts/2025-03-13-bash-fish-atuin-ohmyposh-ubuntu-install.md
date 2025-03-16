@@ -243,10 +243,10 @@ echo 'source $HOME/.atuin/bin/env.fish' >> ~/.config/fish/config.fish
 ```
 HERE is the correct CONFIG.FISH & PATH for this setup.
 
-if status is-interactive
-    atuin init fish | source
-end
-set -Ux PATH /usr/local/bin /usr/bin /bin $HOME/.local/bin
+'if status is-interactive"  
+atuin init fish | source  
+end  
+set -Ux PATH /usr/local/bin /usr/bin /bin $HOME/.local/bin  
 source $HOME/.atuin/bin/env.fish
 
 Run:
@@ -267,6 +267,9 @@ echo 'source $HOME/.atuin/bin/env' >> ~/.bashrc
 ```
 
 
+Summary: After working with Bash, changing to Fish, adding Oh My Posh and Tide to make custom prompts, and finally adding Atuin for Auto Suggestion—which is the key for an easy terminal experience — here are my preferences.
+
+FISH + TIDE + ATUIN     AND drop Oh My Posh.  Nice but not a must-have
 
 
 
