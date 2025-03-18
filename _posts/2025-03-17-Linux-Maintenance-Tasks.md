@@ -124,9 +124,10 @@ Schedule: Run monthly.
 9. Uninstall Unused Snap Packages (Optional)
 Remove Snap packages and old versions you no longer use.
 
-sh```
+```sh
 sudo snap remove <snap-name>
 ```
+
 ```sh
 sudo snap remove --purge
 ```
