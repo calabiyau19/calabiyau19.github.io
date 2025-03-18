@@ -11,17 +11,19 @@ Start with the basics
 ```sh
 sudo apt update && sudo apt upgrade -y
 ```
+
 ```sh
 sudo apt autoremove && sudo apt clean && sudo apt autoclean
 ```
+
 ```sh
 df -h
 ```
+
 ```sh
 
 sudo du -h / 2>/dev/null | sort -h | tail -n 20
 ```
-
 
 This guide outlines 10 essential steps to keep your Linux system clean, optimized, and clutter-free. Each step includes explanations of the commands and their purpose, along with a suggested schedule for maintenance.
 
@@ -86,6 +88,7 @@ Limit the size of system logs to prevent them from consuming too much space.
 ```sh
 sudo journalctl –vacuum-size=100M
 ```
+
 ```sh
 sudo journalctl --vacuum-time=7d
 ```
@@ -99,10 +102,12 @@ Identify large files or directories that consume significant disk space.
 
 ```sh
 sudo du -h / --max-depth=1 | sort -hr | head -10```
+```
 
 ```sh
 du -h / | sort -h | tail -n 20  ←--needs sudo
 ```
+
 ```sh
 sudo du -h / 2>/dev/null | sort -h | tail -n 20
 ```
@@ -114,7 +119,7 @@ Schedule: Run quarterly or when space is low.
 8. Clear Cache Files
 Remove user-specific cache files to free up space.
 
-sh```
+```sh
 rm -rf ~/.cache/*
 ```
 Explanation: This command removes cache files in your home directory. Cache files are safe to delete as they are recreated when needed.
@@ -138,7 +143,10 @@ Schedule: Run as needed.
 10. Perform Regular System Updates
 Ensure your system is updated with the latest packages and security patches.
 
+```sh
 sudo apt update && sudo apt upgrade
+```
+
 Explanation: `apt update` refreshes the package index, and `apt upgrade` installs the latest versions of packages.
 
 11. Run Bleachbit last
