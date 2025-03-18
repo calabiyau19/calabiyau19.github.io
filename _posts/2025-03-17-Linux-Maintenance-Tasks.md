@@ -153,7 +153,7 @@ Explanation: `apt update` refreshes the package index, and `apt upgrade` install
 Run Bleachbit – it is installed
 
 EXTRAS:
-╰─ 
+
 ```sh
 sudo ncdu --exclude /media --exclude /mnt --exclude /proc --exclude /sys --exclude /dev /BACKUPS\ TEMP/
 ```
