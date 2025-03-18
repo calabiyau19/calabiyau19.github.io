@@ -25,7 +25,7 @@ df -h
 sudo du -h / 2>/dev/null | sort -h | tail -n 20
 ```
 
-This guide outlines 10 essential steps to keep your Linux system clean, optimized, and clutter-free. Each step includes explanations of the commands and their purpose, along with a suggested schedule for maintenance.
+This guide outlines 11 essential steps to keep your Linux system clean, optimized, and clutter-free. Each step includes explanations of the commands and their purpose, along with a suggested schedule for maintenance.
 
 1. List Removed Packages with Leftover Configuration Files
 Find packages that have been uninstalled but still have leftover configuration files on your system.
@@ -38,7 +38,7 @@ Explanation: This command checks your system for packages in the "rc" state (rem
 
 Schedule: Run this monthly to identify leftover configuration files.
 
-2. Purge Leftover Configuration Files
+1. Purge Leftover Configuration Files
 Remove all leftover configuration files from uninstalled packages.
 
 ```sh
@@ -49,7 +49,7 @@ Explanation: This command uses `awk` to extract the names of packages in the "rc
 
 Schedule: Run this immediately after Step 1.
 
-3. Remove Specific Unused Packages
+1. Remove Specific Unused Packages
 If you know certain packages are no longer needed, remove them along with their configuration files.
 
 ```sh
