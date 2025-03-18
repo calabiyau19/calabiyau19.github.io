@@ -49,7 +49,7 @@ Explanation: This command uses `awk` to extract the names of packages in the "rc
 
 Schedule: Run this immediately after Step 1.
 
-1. Remove Specific Unused Packages
+3) Remove Specific Unused Packages
 If you know certain packages are no longer needed, remove them along with their configuration files.
 
 ```sh
@@ -60,7 +60,7 @@ Explanation: Replace <package-name> with the package you want to remove. The --p
 
 Schedule: Run as needed when you identify unused packages.
 
-4. Remove Orphaned Packages
+4) Remove Orphaned Packages
 Clear out packages that were automatically installed as dependencies but are no longer needed.
 
 ```sh
@@ -71,7 +71,7 @@ Explanation: The `autoremove` command removes orphaned packages, and `--purge` e
 
 Schedule: Run weekly or biweekly.
 
-5. Clean APT Cache
+5) Clean APT Cache
 Clear the cache of downloaded package files to free up space.
 
 ```sh
@@ -82,7 +82,7 @@ Explanation: This command removes downloaded package files stored in /var/cache/
 
 Schedule: Run monthly or when low on disk space.
 
-6. Manage System Logs
+6) Manage System Logs
 Limit the size of system logs to prevent them from consuming too much space.
 
 ```sh
@@ -97,7 +97,7 @@ Explanation: This command ensures that your system logs don't exceed 100 MB in s
 
 Schedule: Run monthly or when logs grow excessively.
 
-7. Find and Remove Large Files
+7) Find and Remove Large Files
 Identify large files or directories that consume significant disk space.
 
 ```sh
@@ -116,7 +116,7 @@ Explanation: This command uses `du` to calculate the size of directories, sorts 
 
 Schedule: Run quarterly or when space is low.
 
-8. Clear Cache Files
+8) Clear Cache Files
 Remove user-specific cache files to free up space.
 
 ```sh
@@ -126,7 +126,7 @@ Explanation: This command removes cache files in your home directory. Cache file
 
 Schedule: Run monthly.
 
-9. Uninstall Unused Snap Packages (Optional)
+9) Uninstall Unused Snap Packages (Optional)
 Remove Snap packages and old versions you no longer use.
 
 ```sh
@@ -140,7 +140,7 @@ Explanation: Use `snap remove` to uninstall Snap packages and `--purge` to remov
 
 Schedule: Run as needed.
 
-10. Perform Regular System Updates
+10) Perform Regular System Updates
 Ensure your system is updated with the latest packages and security patches.
 
 ```sh
@@ -149,7 +149,7 @@ sudo apt update && sudo apt upgrade
 
 Explanation: `apt update` refreshes the package index, and `apt upgrade` installs the latest versions of packages.
 
-11. Run Bleachbit last
+11) Run Bleachbit last
 Run Bleachbit – it is installed
 
 EXTRAS:
