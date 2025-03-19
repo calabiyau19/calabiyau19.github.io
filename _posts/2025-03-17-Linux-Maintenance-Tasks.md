@@ -2,11 +2,11 @@
 layout: post
 title: "Linux Maintenance Tasks"
 date:  2025-03-17
+last_modified_at: 2025-03-19
 ---
+<p>Last updated: {{ page.last_modified_at }}</p>
 
-
-Comprehensive System Cleanup Guide
-Start with the basics
+TL:DR   Always run at least these weekly if not more often.
 
 ```sh
 sudo apt update && sudo apt upgrade -y
@@ -16,16 +16,13 @@ sudo apt update && sudo apt upgrade -y
 sudo apt autoremove && sudo apt clean && sudo apt autoclean
 ```
 
+This shows how much disk space you have used and have left
+
 ```sh
 df -h
 ```
 
-```sh
-
-sudo du -h / 2>/dev/null | sort -h | tail -n 20
-```
-
-This guide outlines 11 essential steps to keep your Linux system clean, optimized, and clutter-free. Each step includes explanations of the commands and their purpose, along with a suggested schedule for maintenance.
+This guide outlines 11 additional steps to keep your Linux system clean, optimized, and clutter-free. Each step includes explanations of the commands and their purpose, along with a suggested schedule for maintenance.
 
 1) List Removed Packages with Leftover Configuration Files
 Find packages that have been uninstalled but still have leftover configuration files on your system.
@@ -83,38 +80,62 @@ Explanation: This command removes downloaded package files stored in /var/cache/
 Schedule: Run monthly or when low on disk space.
 
 6) Manage System Logs
-Limit the size of system logs to prevent them from consuming too much space.
+
+First, display  the siz of your logs.
 
 ```sh
-sudo journalctl –vacuum-size=100M
+journalctl --disk-usage
 ```
+
+Or the following, which also gives the log location.
 
 ```sh
-sudo journalctl --vacuum-time=7d
+du -sh /var/log/journal
 ```
 
-Explanation: This command ensures that your system logs don't exceed 100 MB in size.
+By default, on Linux Mint 22 logs are in most cases capped at a certain size.
+Running the following  command ensures that your system logs don't exceed 99 MB in size.
 
-Schedule: Run monthly or when logs grow excessively.
+```sh
+sudo journalctl --vacuum-size=99M
+```
+
+Schedule: Run monthly or when logs grow too large
+
+
+To make this automatic, first open the journald.config file.
+
+```sh
+sudo nano /etc/systemd/journald.conf
+```
+
+Then change or add:
+SystemMaxUse=99M
+And then Save the file and apply the change.
+
+```sh
+sudo systemctl restart systemd-journald
+```
 
 7) Find and Remove Large Files
 Identify large files or directories that consume significant disk space.
 
 ```sh
-sudo du -h / --max-depth=1 | sort -hr | head -10```
+sudo du -ahx / 2>/dev/null | sort -h | tail -n 20
 ```
+Better
 
 ```sh
-du -h / | sort -h | tail -n 20  ←--needs sudo
+sudo du -hx -d 2 / 2>/dev/null | sort -h | tail -n 20
 ```
+
+The following command displays large files but skips /mnt - which may cause the command to appear to hang when all it might be doing is looking into /mnt and then into whatever is mounted there such as external drives, network shares, etc.
 
 ```sh
-sudo du -h / 2>/dev/null | sort -h | tail -n 20
+[ -d /home/mark/mnt ] && echo "⚠️ Skipping /home/mark/mnt (external drive detected)" >&2
+sudo du -hx --exclude=/home/mark/mnt -d 1 /home/mark 2>/dev/null | sort -h
 ```
 
-Explanation: This command uses `du` to calculate the size of directories, sorts them by size, and displays the top 10 largest directories.
-
-Schedule: Run quarterly or when space is low.
 
 8) Clear Cache Files
 Remove user-specific cache files to free up space.
@@ -122,6 +143,7 @@ Remove user-specific cache files to free up space.
 ```sh
 rm -rf ~/.cache/*
 ```
+
 Explanation: This command removes cache files in your home directory. Cache files are safe to delete as they are recreated when needed.
 
 Schedule: Run monthly.
@@ -140,33 +162,40 @@ Explanation: Use `snap remove` to uninstall Snap packages and `--purge` to remov
 
 Schedule: Run as needed.
 
-10) Perform Regular System Updates
-Ensure your system is updated with the latest packages and security patches.
-
-```sh
-sudo apt update && sudo apt upgrade
-```
-
-Explanation: `apt update` refreshes the package index, and `apt upgrade` installs the latest versions of packages.
-
-11) Run Bleachbit last
+10) Run Bleachbit last
 Run Bleachbit – it is installed
 
-EXTRAS:
+11)  ## OPTIONAL:  Much better file system manager for cleanup purposes but must install  ncdu first
+ncdu is NCurses Disk Usage.  Like du but much faster and graphical and interactive
 
 ```sh
-sudo ncdu --exclude /media --exclude /mnt --exclude /proc --exclude /sys --exclude /dev /BACKUPS\ TEMP/
+sudo apt update && sudo apt install ncdu -y
 ```
 
--this is a new(old) command line program called ncdu
+Then various scans:
+Root scan
 
+```sh
+sudo ncdu /
+```
+Specific folder scan
 
-Schedule: Run weekly.
+```sh
+ncdu /home
+```
+
+Ignore mounted drives (faster scan)
+
+```sh
+sudo ncdu -x /
+```
+
+Schedule: Run monthly.
 
 Suggested Maintenance Schedule
 Weekly: Steps 4, 10
 
-Monthly: Steps 1, 2, 5, 6, 8
+Monthly: Steps 1, 2, 5, 6, 8, 11
 
 Quarterly: Steps 7
 

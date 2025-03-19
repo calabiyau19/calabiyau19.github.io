@@ -28,7 +28,13 @@
     "zsh": { "path": "/bin/zsh", "args": ["-l", "-i"] }
   },
   "cSpell.words": [
+    "autoclean",
+    "autoremove",
+    "Bleachbit",
+    "dpkg",
     "Immich",
+    "journalctl",
+    "ncdu",
     "notecards"
   ]
 }
