@@ -5,8 +5,9 @@ date:  2025-03-17
 last_modified_at: 2025-03-19
 ---
 <p>Last updated: {{ page.last_modified_at }}</p>
+<p></p>
 
-Keeping your Linux system clean and up to date is essential. Here are some easy maintenance routines to follow.  Please checkout #11 for a good app to help you manage files easily.
+Keeping your Linux system clean and up to date is essential. Here are some easy maintenance routines to follow.  Please check out #11 for a good app to help you manage files easily.
 
 
 TL:DR   Always run at least these weekly if not more often.
@@ -192,6 +193,26 @@ Ignore mounted drives (faster scan)
 ```sh
 sudo ncdu -x /
 ```
+BONUS CONTENT:
+
+Set up reminders for weekly, monthly and quarterly with notifications and links to this article
+
+Open crontab to add reminders.
+
+```sh
+crontab -e
+```
+
+Add the following lines and change the document location to match your own
+
+❯ #Weekly maintenance task reminder                                                                            ─╯
+  0 9 * * 1 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /usr/bin/env fish -c 'notify-send "Weekly System Maintenance" "Reminder: Perform your weekly system maintenance tasks! Check your guide at https://calabiyau19.github.io/posts/Linux-Maintenance-Tasks/"'
+  #Monthly maintenance task reminder
+  0 9 1 * * DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /usr/bin/env fish -c 'notify-send "Monthly System Maintenance" "Reminder: Perform your monthly system maintenance tasks! Check your guide at https://calabiyau19.github.io/posts/Linux-Maintenance-Tasks/"'
+  #Quarterly maintenance task reminder
+  0 9 1 1,4,7,10 * DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /usr/bin/env fish -c 'notify-send "Quarterly System Maintenance" "Reminder: Perform your quarterly system maintenance tasks! Check your guide at https://calabiyau19.github.io/posts/Linux-Maintenance-Tasks/"'
+
+You will get a popup reminder (tested in Linux MInt) to perform the maintenance tasks as outlined
 
 Schedule: Run monthly.
 
