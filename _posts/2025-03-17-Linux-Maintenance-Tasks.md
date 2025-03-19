@@ -207,8 +207,10 @@ Add the following lines and change the document location to match your own
 
 ❯ #Weekly maintenance task reminder                                                                            ─╯
   0 9 * * 1 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /usr/bin/env fish -c 'notify-send "Weekly System Maintenance" "Reminder: Perform your weekly system maintenance tasks! Check your guide at https://calabiyau19.github.io/posts/Linux-Maintenance-Tasks/"'
+
   #Monthly maintenance task reminder
   0 9 1 * * DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /usr/bin/env fish -c 'notify-send "Monthly System Maintenance" "Reminder: Perform your monthly system maintenance tasks! Check your guide at https://calabiyau19.github.io/posts/Linux-Maintenance-Tasks/"'
+  
   #Quarterly maintenance task reminder
   0 9 1 1,4,7,10 * DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /usr/bin/env fish -c 'notify-send "Quarterly System Maintenance" "Reminder: Perform your quarterly system maintenance tasks! Check your guide at https://calabiyau19.github.io/posts/Linux-Maintenance-Tasks/"'
 
