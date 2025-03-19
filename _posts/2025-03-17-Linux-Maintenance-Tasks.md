@@ -3,6 +3,7 @@ layout: post
 title: "Linux Maintenance Tasks"
 date:  2025-03-17
 last_modified_at: 2025-03-19
+excerpt: "Run these weekly, monthly, quarterly tasks to keep your system clean and up to date."
 ---
 <p>Last updated: {{ page.last_modified_at }}</p>
 
