@@ -210,7 +210,7 @@ Add the following lines and change the document location to match your own
 
   #Monthly maintenance task reminder
   0 9 1 * * DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /usr/bin/env fish -c 'notify-send "Monthly System Maintenance" "Reminder: Perform your monthly system maintenance tasks! Check your guide at https://calabiyau19.github.io/posts/Linux-Maintenance-Tasks/"'
-  
+
   #Quarterly maintenance task reminder
   0 9 1 1,4,7,10 * DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /usr/bin/env fish -c 'notify-send "Quarterly System Maintenance" "Reminder: Perform your quarterly system maintenance tasks! Check your guide at https://calabiyau19.github.io/posts/Linux-Maintenance-Tasks/"'
 
@@ -218,11 +218,10 @@ You will get a popup reminder (tested in Linux MInt) to perform the maintenance 
 
 Schedule: Run monthly.
 
+
+
 Suggested Maintenance Schedule
 Weekly: Steps 4, 10
-
 Monthly: Steps 1, 2, 5, 6, 8, 11
-
 Quarterly: Steps 7
-
 As Needed: Steps 3, 9
