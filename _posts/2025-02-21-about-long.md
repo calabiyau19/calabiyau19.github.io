@@ -13,7 +13,7 @@ Welcome to my Documentation Hub\! While this site is powered by **Jekyll**, the 
 
 ### The Journey Begins
 
-My interest in Linux has been long-standing. Many years ago, I dabbled in Slackware—one of the first Linux distributions—but due to lack of time and fear of breaking the one family computer, I never really dove deep into Linux. It wasn’t until last summer that I decided to revisit Linux and take it seriously.
+My interest in Linux started many years ago. I dabbled in Slackware - one of the first Linux distributions - but due to lack of time and fear of breaking our one family computer, I never really dove deep into Linux. It wasn’t until last summer that I decided to revisit Linux and take it seriously.
 
 I resurrected an old 14-year-old laptop that had been collecting dust. While I’d attempted to install Linux on it before, I never committed to learning it. But this time, I made it a project. For many people, this is how their Linux journey begins—taking an old, underused computer and breathing new life into it with Linux.
 
