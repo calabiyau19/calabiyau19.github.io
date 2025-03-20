@@ -5,8 +5,6 @@ draft: true
 date:  2025-02-21
 ---
 
-
-
 ## Welcome to My Documentation Hub
 
 Welcome to my Documentation Hub\! While this site is powered by **Jekyll**, the real focus here is everything I've learned during my **Linux journey**—which began about six months ago. I built this site to serve as a place to document my learning process and share what I discover along the way.
