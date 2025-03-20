@@ -2,7 +2,7 @@
 layout: post
 title: "Linux Maintenance Tasks"
 date:  2025-03-17
-description:  Keeping your Linux system clean and up to date is essential. Here are some easy maintenance routines to follow.  Please check out number eleven for a good app to help you manage files easily.  Hint: ncdu
+description:  Keeping your Linux system clean and up to date is essential. Here are some easy maintenance routines to follow.  Please check out number eleven for a good app to help you manage files easily.  Hint. ncdu
 ---
 
 
