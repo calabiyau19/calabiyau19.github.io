@@ -3,14 +3,13 @@ layout: post
 title: "Linux Maintenance Tasks"
 date:  2025-03-17
 last_modified_at: 2025-03-19
+description:  Keeping your Linux system clean and up to date is essential. Here are some easy maintenance routines to follow.  Please check out number 11 for a good app to help you manage files easily
 ---
 
 <p>Last updated: {{ page.last_modified_at }}</p>
 
-<p>Keeping your Linux system clean and up to date is essential. Here are some easy maintenance routines to follow.  Please check out #11 for a good app to help you manage files easily.</p>
 
-
-TL:DR   Always run at least these weekly if not more often.
+TL:DR   Always run at least these weekly, if not more often.
 
 ```sh
 sudo apt update && sudo apt upgrade -y
