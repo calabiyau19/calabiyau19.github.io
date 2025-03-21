@@ -1,0 +1,13 @@
+---
+---
+
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
+:root[data-theme="dark"] {
+  --text-color: #C3C3C3;  /* Brighter post text */
+}
