@@ -9,5 +9,5 @@
 
 /* append your custom style below */
 :root[data-theme="dark"] {
-  --text-color: #FF0000;  /* Brighter post text */
+  --text-color: #C3C3C3;  /* Brighter post text */
 }
