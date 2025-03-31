@@ -107,12 +107,8 @@ By default, you need `sudo` to run Docker commands. To run Docker as a regular u
 sudo usermod -aG docker $USER
 ```
 
-
-Apply the group change immediately:
-
-```sh
-newgrp docker
-```
+# IMPORTANT: Log out and back in to apply group membership
+# Do NOT use 'newgrp docker' — it temporarily changes your primary group and may cause permission issues
 
 Now test running Docker **without sudo**:
 

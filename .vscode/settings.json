@@ -31,11 +31,18 @@
     "autoclean",
     "autoremove",
     "Bleachbit",
+    "buildx",
+    "containerd",
+    "containrrr",
     "DBUS",
     "dpkg",
+    "freshrss",
     "Immich",
     "journalctl",
     "ncdu",
-    "notecards"
+    "newgrp",
+    "notecards",
+    "ntfy",
+    "usermod"
   ]
 }
