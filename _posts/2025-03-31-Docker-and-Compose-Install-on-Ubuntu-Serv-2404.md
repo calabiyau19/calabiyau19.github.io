@@ -34,10 +34,9 @@ Docker packages are signed, so we need to add the official GPG key:
 
 ```sh
 sudo install -m 0755 -d /etc/apt/keyrings
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg sudo tee /etc/apt/keyrings/docker.asc > /dev/null 
- 
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
 sudo chmod a+r /etc/apt/keyrings/docker.asc
+
 ```
 
 
