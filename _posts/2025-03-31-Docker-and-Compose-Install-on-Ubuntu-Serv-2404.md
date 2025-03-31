@@ -1,8 +1,9 @@
+---
 layout: post
 title: "Docker Compose Install on Ubuntu server 24.04"
 date:  2025-03-31
 description:  Step by step installation of Docker and Docker Compose in a Ubuntu 24.04 Virtual Machine running on Proxmox server
-```
+---
 
 ### **Installing the Latest Docker and Docker Compose on Ubuntu Server 24.04**
 
@@ -157,21 +158,20 @@ At this point, you have **the latest Docker and Docker Compose installed on Ubun
 
 Watchtower automatically updates your running Docker containers when new versions are available. However, **you should install Watchtower after deploying key applications like FreshRSS** to ensure everything is set up correctly before automating updates.
 
-```
 
 ### **Step 11: Install Watchtower with Ntfy.sh Notifications**
 
 **Run Watchtower with Ntfy.sh**  
- Replace `<your-ntfy-topic>` with your chosen topic (e.g., `freshrss-updates`):
+Replace `<your-ntfy-topic>` with your chosen topic (e.g., `freshrss-updates`):
 
 ```sh
-`docker run -d \`  
-  `--name watchtower \`  
-  `--restart unless-stopped \`  
-  `-v /var/run/docker.sock:/var/run/docker.sock \`  
-  `-e WATCHTOWER_NOTIFICATIONS=ntfy \`  
-  `-e WATCHTOWER_NOTIFICATION_URL="https://ntfy.sh/<your-ntfy-topic>" \`  
-  `containrrr/watchtower`
+docker run -d
+  --name watchtower  
+  --restart unless-stopped
+  -v /var/run/docker.sock:/var/run/docker.sock  
+  -e WATCHTOWER_NOTIFICATIONS=ntfy
+  -e WATCHTOWER_NOTIFICATION_URL="https://ntfy.sh/<your-ntfy-topic>" 
+  containrrr/watchtower
 ```
 
 1. 
@@ -184,5 +184,5 @@ Watchtower automatically updates your running Docker containers when new version
 ```
 
 3. **Test Ntfy.sh Notifications**  
-    Open your Ntfy.sh topic URL (`https://ntfy.sh/<your-ntfy-topic>`) in a browser or use the mobile app to verify Watchtower messages.
+  Open your Ntfy.sh topic URL (`https://ntfy.sh/<your-ntfy-topic>`) in a browser or use the mobile app to verify Watchtower messages.
 
