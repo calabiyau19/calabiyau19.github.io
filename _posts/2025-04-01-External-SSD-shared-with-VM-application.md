@@ -1,10 +1,11 @@
- ---
+---
 layout: post
 title: "External SSD with VM application"
 date:  2025-04-01
-description:  Step by step directions of attaching a SSD to a Proxmox host and adding a folder to it that is accessible by a VM on the Proxmox server.  In this case that was Navidrome on the Proxmox server with the music store on the external ssd drive
+description:  Step by step directions of attaching a SSD to a Proxmox host and adding a folder to it that is accessible by a VM on the Proxmox server.  In this case, that was Navidrome on the Proxmox server with the music stored on the external ssd drive
 ---
- 
+
+
  
  Here are the steps to properly set up the external SSD (e.g., `Ext_T7_ssd`) for sharing music from the Proxmox host to `navidrome-vm`.
 

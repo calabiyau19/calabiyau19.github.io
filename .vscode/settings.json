@@ -36,13 +36,18 @@
     "containrrr",
     "DBUS",
     "dpkg",
+    "exportfs",
     "freshrss",
+    "FSTYPE",
     "Immich",
     "journalctl",
+    "MOUNTPOINT",
+    "navidrome",
     "ncdu",
     "newgrp",
     "notecards",
     "ntfy",
+    "rootdisk",
     "usermod"
   ]
 }
