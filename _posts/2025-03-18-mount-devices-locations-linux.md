@@ -2,6 +2,7 @@
 layout: post
 title: "Mount Devices and Locations in Linux"
 date:  2025-03-18
+description:  Various ways to add additional storage to a proxmox server such as adding a partition, internal storage drive,  or external SSD or HDD drives
 ---
 
 ## NOTE: run these commands individually 
