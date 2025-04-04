@@ -3,8 +3,8 @@ layout: post
 title: "Bash Fish Tide Atuin Oh My Posh"
 draft: true
 date:  2025-03-13
+description:  Comparison between the various features of Bash, Fish, Atuin, Oh, My Posh, Tide, plus prompt completion and prompt styles
 ---
-
 
 
 
@@ -270,6 +270,8 @@ echo 'source $HOME/.atuin/bin/env' >> ~/.bashrc
 Summary: After working with Bash, changing to Fish, adding Oh My Posh and Tide to make custom prompts, and finally adding Atuin for Auto Suggestion—which is the key for an easy terminal experience — here are my preferences.
 
 FISH + TIDE + ATUIN     AND drop Oh My Posh.  Nice but not a must-have
+
+UPDATE:  In a hurry?  Just install Atuin in the normally default Bash shell
 
 
 
