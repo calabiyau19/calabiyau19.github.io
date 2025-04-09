@@ -156,9 +156,12 @@ Before calling it **done**, make sure:
 
 How to change watchtower version to nickfedor/watchtower
 
+{% raw %}
 ```sh
-docker ps --format "table{{.Names}}\t{{.Image}}"
+docker ps --format "table {{.Names}}\t{{.Image}}"
 ```
+{% endraw %}
+
 This will get the actual name of the watchtower container running.  Mine were being given random names as watchtower was trying to update them and failing and then giving them a random string name.  If needed run the following command.
 
 ```sh
