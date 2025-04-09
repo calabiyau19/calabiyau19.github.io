@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "External SSD with VM application"
+title: "External SSD with VM application. Done for Navidrome music library setup"
 date:  2025-04-01
 description:  Step by step directions of attaching a SSD to a Proxmox host and adding a folder to it that is accessible by a VM on the Proxmox server.  In this case, that was Navidrome on the Proxmox server with the music stored on the external ssd drive
 ---
