@@ -35,6 +35,7 @@
     "buildx",
     "chsh",
     "containerd",
+    "containerrr",
     "containrrr",
     "Cosman",
     "DBUS",
@@ -53,9 +54,11 @@
     "navidrome",
     "ncdu",
     "newgrp",
+    "nickfedor",
     "notecards",
     "ntfy",
     "rootdisk",
+    "shoutrrr",
     "usermod"
   ]
 }

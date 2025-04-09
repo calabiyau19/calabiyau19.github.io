@@ -3,8 +3,11 @@ layout: post
 title: "Watchtower Install"
 draft: false
 date:  2025-02-21
----
+description:  Step by step directions to install, setup and run Watchtower which will run inside my VMs that have Docker containers (all of them!) and update them automatically.  This is the initial version of watchtower (containerrr) and an updated version (nickfedor)
 
+## UPDATE: 04192025
+
+The containrrr/watchtower version of watchtower is no longer actively maintained.  There are currently several forks being maintained so I went with the nickfedor/watchtower version from github.  At the end of this post are the steps I followed to change each instance of watchtower running in the home lab now. Six VMs on two hypervisors running 22 containers and one watchtower instance on lpt-hp running 14 containers.
 
 Watchtower Installation & Configuration Guide
 
@@ -148,5 +151,49 @@ Before calling it **done**, make sure:
 
 ---
 
-### 
+## UPDATE: 04192025
+
+How to change watchtower version to nickfedor/watchtower
+
+```sh
+docker ps --format "table {{.Names}}\t{{.Image}}" 
+```
+This will get the actual name of the watchtower container running.  Mine were being given random names as watchtower was trying to update them and failing and then giving them a random string name.  If needed run the following command.
+
+```sh
+docker rename [container-name-from-prior-command] watchtower
+```
+
+Then run:
+
+```sh
+docker stop watchtower && docker rm watchtower
+```
+
+Now reinstall and restart the Watchtower container
+
+```sh
+
+docker run -d \
+  --name watchtower \
+  --restart unless-stopped \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -e WATCHTOWER_NOTIFICATIONS=shoutrrr \
+  -e WATCHTOWER_NOTIFICATION_URL="ntfy://ntfy.sh/watchtower-updates" \
+  -e WATCHTOWER_NOTIFICATION_REPORT=true \
+  nickfedor/watchtower \
+  --interval 172800 \
+  --cleanup \
+  --include-restarting \
+  --label-enable\
+
+```
+NOTE:  This command turns off Watchtower trying to update itself. I will update that manually if needed - but that will be infrequently going forward.  
+
+
+Wait a minute or so and then run the following to confirm it is running and healthy:
+
+```sh
+docker ps
+```
 
