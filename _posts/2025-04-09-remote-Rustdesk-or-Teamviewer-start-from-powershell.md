@@ -3,7 +3,7 @@ layout: post
 title: "Remotely start Rustdesk or Teamviewer from Powershell prompt"
 draft: false
 date:  2025-04-09
-description: Short instructions to access a remote windows pc IF you already have SSH access but other GUI programs like Rustdesk or Teamviewer are not working.  This includes remote reboot instructions as well
+description: Short instructions to access a remote windows pc **IF you already have SSH access** but other GUI programs like Rustdesk or Teamviewer are not working.  This includes remote reboot instructions as well
 ---
 
 
