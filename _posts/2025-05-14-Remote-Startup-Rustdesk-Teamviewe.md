@@ -1,6 +1,13 @@
-### Remote Startup of Rustdesk and Teamviewer services on Windows PC
+---
+layout: post
+title: "Remote Startup of Rustdesk and Teamviewer services on Windows PC"
+draft: false
+date:  2025-05-14
+description: How to remotely start up TeamViewer and/or Rust Desk services on a remote PC where both applications are already installed. 
+---
 
-How to remotely start up TeamViewer and/or Rust Desk Services on a remote PC where both applications are already installed. This could also be used for other applications, and might happen if something else is running on the remote PC that has caused your application to stop running.    
+
+How to remotely start up TeamViewer and/or Rust Desk services on a remote PC where both applications are already installed. This could also be used for other applications, and might happen if something else is running on the remote PC that has caused your application to stop running.    
 This happened to me today when I tried to access a family member's remote PC to give them computer support and realized that both TeamViewer and RustDesk applications were not running.
 
 Trying to start up the applications directly was tried, but this solution ended up being the fastest by far and the easiest to troubleshoot
