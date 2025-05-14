@@ -11,8 +11,10 @@ Trying to start up the applications directly was tried, but this solution ended 
 
 **1\. Check if RustDesk and TeamViewer are running:**
 
-`sc query rustdesk`  
-`sc query TeamViewer`
+```sh
+sc query rustdesk
+sc query TeamViewer
+```
 
 *These commands check the current status (running, stopped, etc.) of the RustDesk and TeamViewer services.*
 
@@ -20,8 +22,10 @@ Trying to start up the applications directly was tried, but this solution ended 
 
 **2\. Start them if they are not running:**
 
-`sc start rustdesk`  
-`sc start TeamViewer`
+```sh
+sc start rustdesk 
+sc start TeamViewer
+```
 
 *These commands start the RustDesk and TeamViewer services if they are installed and currently stopped.*
 
