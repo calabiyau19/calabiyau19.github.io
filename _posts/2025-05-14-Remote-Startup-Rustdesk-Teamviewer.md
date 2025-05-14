@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Remote Startup of Rustdesk and Teamviewer services on Windows PC"
+title: "Remote Startup of Rustdesk and Teamviewer Services on Windows PC"
 draft: false
 date:  2025-05-14
 description: How to remotely start up TeamViewer and/or Rust Desk services on a remote PC where both applications are already installed. 
