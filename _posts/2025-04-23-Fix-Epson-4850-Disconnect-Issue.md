@@ -5,7 +5,7 @@ draft: false
 date:  2025-04-23
 description: Continued problems with losing the Epson ET-4850 printer connection over the network led me to a series of troubleshooting steps to resolve it today.  
 ---
-
+### 05-15-25 UPDATE:  7 weeks in and the printer has never disconnected and is working without errors
 
 ### **1\. Open the CUPS Web Interface**
 
