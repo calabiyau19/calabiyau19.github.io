@@ -50,7 +50,7 @@ The destination:  /media/Linux\_Extra/Website-Backups/Jekyll/
 Other actual examples:   
 ```sh
 
-rsync \-av mark@hostnamel:/home/mark/Desktop/demosite /media/Linux\_Extra/Website-Backups/Jekyll/   
+rsync \-av mark@hostname:/home/mark/Desktop/demosite /media/Linux\_Extra/Website-Backups/Jekyll/   
 
 rsync \-av mark@192.xx.x.xxx:/home/mark/my-doc-website /media/Linux\_Extra/Website-Backups/Hugo/  
 
