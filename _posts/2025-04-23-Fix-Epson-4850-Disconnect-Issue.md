@@ -5,8 +5,8 @@ draft: false
 date:  2025-04-23
 description: Continued problems with losing the Epson ET-4850 printer connection over the network led me to a series of troubleshooting steps to resolve it today.  
 ---
-## 05-15-25 UPDATE:  7 weeks in and the printer has never disconnected and is working without errors
-## 05-18-25 UPDATE:  I should not have said anything.  The next day it was a major problem again not solved with a simple re-boot of the printer.  
+# 05-15-25 UPDATE:  7 weeks in and the printer has never disconnected and is working without errors
+# 05-18-25 UPDATE:  I should not have said anything.  The next day it was a major problem again not solved with a simple re-boot of the printer.  
 
 The updated fix was to reset network settings in Settings, immediately reboot the printer and do the wifi wizard again.  Using the long cat 5 cable did allow me to print but did not solve the wifi issue this time.  In the process I deleted the CUPS installed printer Chad had me set up and everything prints to the printer fine now.  Have no idea why it keeps happening other than it is a printer issue as it is all over online help forums with these Epson printers.
 
