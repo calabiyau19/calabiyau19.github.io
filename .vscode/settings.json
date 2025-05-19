@@ -33,12 +33,14 @@
     "autoremove",
     "Bleachbit",
     "buildx",
+    "calabiyau",
     "chsh",
     "containerd",
     "containerrr",
     "containrrr",
     "Cosman",
     "DBUS",
+    "demosite",
     "dpkg",
     "Everforest",
     "exportfs",
@@ -59,6 +61,7 @@
     "ntfy",
     "rootdisk",
     "shoutrrr",
+    "subfolders",
     "usermod"
   ]
 }
