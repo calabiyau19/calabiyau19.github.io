@@ -1,16 +1,24 @@
 ---
 layout: post
 title: "Attempt 2 to fix Epson ET4850 printer on home network"
-draft: false
+draft: false88
 date:  2025-04-23
 description: Continued problems with losing the Epson ET-4850 printer connection over the network led me to a series of troubleshooting steps to resolve it today.  
 ---
+**06-20-25 UPDATE**: Since 5-18, the printer has been working fine and not lost connection one time. The ping test was stopped, the 192.168.1.92 IP address was checked to make sure it was a fixed or static IP on the network. But, the real fix was changing the printer's network to 2Wire instead of Deco. The working theory is with three Deco access points and 2.5 and 5 options on each, the printer was roaming between dco connections and losing access from time to time that only a hard reboot seemed to fix. Printers don't roam well like cellphones, tablets and laptops as well. I also isolated the deco access to the nearest one and disabled band steering but forgot how I did it.  Probably in Deco configuration. 
 
-**05-18-25 UPDATE:  I should not have said anything.  The next day it was a major problem again not solved with a simple re-boot of the printer.**  
+In the menu, in settings, reset default network settings, then immediately reboot the printer, hit the Wi-Fi icon, and the Wi-Fi setup wizard started and I reconnected it to my 2wire network, not my Deco mesh network, and the printer was back online again. Also stopped the pinging script because it was doing nothing and potentially a cause for loss of network connectivity. 
 
-05-15-25 UPDATE:  7 weeks in and the printer has never disconnected and is working without error
+The final step was deleting the printer Chad set up in CUPS and now I am back to only having one working printer. 
+Also got into the Epson web interface at http://192.168.1.92 and made sure obtain IP was set to manual and matched what was in the router. Static. 
+Then as I needed a better tool to monitor up/down status - I installed LibreNMS which then led to every device now running on LibreNMS. So, constant monitoring via SMTP which seems to be working. 
 
-The **5-18-25 updated** fix was to reset network settings in Settings, immediately reboot the printer and do the wifi wizard again.  Using the long cat 5 cable did allow me to print but did not solve the wifi issue this time.  In the process I deleted the CUPS installed printer Chad had me set up and everything prints to the printer fine now.  Have no idea why it keeps happening other than it is a printer issue as it is all over online help forums with these Epson printers.
+
+**05-18-25 UPDATE**:  I should not have said anything.  The next day it was a major problem again not solved with a simple re-boot of the printer.
+
+**05-15-25 UPDATE**:  7 weeks in and the printer has never disconnected and is working without error
+
+The **5-18-25 UPDATE**: fix was to reset network settings in Settings, immediately reboot the printer and do the wifi wizard again.  Using the long cat 5 cable did allow me to print but did not solve the wifi issue this time.  In the process I deleted the CUPS installed printer Chad had me set up and everything prints to the printer fine now.  Have no idea why it keeps happening other than it is a printer issue as it is all over online help forums with these Epson printers.
 
 
 
