@@ -11,3 +11,6 @@
 :root[data-theme="dark"] {
   --text-color: #C3C3C3;  /* Brighter post text */
 }
+a.site-title {
+  display: none !important;
+}
