@@ -6,7 +6,7 @@ date:  2025-06-22
 description: How to point a personal domain to your site the you host on GitHub pages.  Easy setup.  
 ---
  
- ## **Pointing a Custom Domain to a GitHub Pages Site**
+## **Pointing a Custom Domain to a GitHub Pages Site**
 
 **Situation:**  
  You own a domain (e.g., example.com) via a registrar like Namecheap, and your site is hosted on GitHub Pages (e.g., yourusername.github.io).
