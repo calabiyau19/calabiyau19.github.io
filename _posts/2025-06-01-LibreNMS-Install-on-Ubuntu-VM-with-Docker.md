@@ -2,7 +2,7 @@
 layout: post
 title: "Setting up LibreNMS and SNMP clients on Network servers"
 draft: false
-date:  2025-06-001
+date:  2025-06-01
 description: How to set up LibreNMS and SNMP on each network server to monitor up/down, health and ports.  
 ---
 
