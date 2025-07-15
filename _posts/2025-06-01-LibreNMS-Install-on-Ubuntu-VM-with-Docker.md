@@ -62,7 +62,7 @@ docker ps
 Step 4: Access LibreNMS Web Interface  
 Open a browser and go to:
 
-[http://192.168.1.176:8000](http://192.168.1.176:8000)
+[192.168.1.176:8000]
 
 You walk through the web installer to finish the setup steps.   No command-line steps here.
 
@@ -158,7 +158,7 @@ Web interface accessible, devices could be added using SNMP, and your SNMP servi
 
 ---
 
-*This next section is about setting up alerts, which is not too hard, and getting the alerts sent to [ntfy.sh](http://ntfy.sh) and topic Libre\_NMS so I could receive real-time alerts on my pc, phone, and on LibreNMS itself.*  
+*This next section is about setting up alerts, which is not too hard, and getting the alerts sent to [ntfy.sh](https://ntfy.sh) and topic Libre\_NMS so I could receive real-time alerts on my pc, phone, and on LibreNMS itself.*  
 
 ---
 
