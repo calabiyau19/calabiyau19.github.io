@@ -48,20 +48,25 @@
     "fontconfig",
     "freshrss",
     "FSTYPE",
+    "fusermount",
     "Ilan",
     "Immich",
     "jorgebucaran",
     "journalctl",
+    "mkbackup",
     "MOUNTPOINT",
     "navidrome",
     "ncdu",
+    "NETFS",
     "newgrp",
     "nickfedor",
     "notecards",
     "ntfy",
     "rootdisk",
     "shoutrrr",
+    "SSHFS",
     "subfolders",
-    "usermod"
+    "usermod",
+    "Xubuntu"
   ]
 }
