@@ -5,6 +5,9 @@ draft: false
 date:  2025-02-21
 description:  Step by step directions to install, setup and run Watchtower which will run inside my VMs that have Docker containers (all of them!) and update them automatically.  This is the initial version of watchtower (containerrr) and an updated version (nickfedor)
 ---
+### UPDATE: 08112025
+
+REMOVED WATCHTOWER FROM VMS CONTAINING DOCKER APPS ON VMS. Watchtower missed many updates and doing it manually for each VM/docker app only took ten minutes. 
 
 ## UPDATE: 04192025
 
