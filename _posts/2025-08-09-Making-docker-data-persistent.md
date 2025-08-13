@@ -25,17 +25,21 @@ services:
       - ./data:/var/lib/myapp   # <- app’s data dir inside container.  ./ = current directory - home, in this case
 ```
 
-Bring it up:
+Bring up the containers.
+
 ```sh
 docker compose up -d
 ```
 
 Verify it’s persistent - using [adguardhome] as the container name
 
+{% raw %}
+
 ```sh
 docker inspect adguardhome --format '{{range .Mounts}}{{println .Source "->" .Destination}}{{end}}'
 
 ```
+{% endraw %}
 
 You should see your host path mapped to the container path.
 
@@ -76,6 +80,7 @@ volumes:
 Then:
 
 ```sh
+
 cd ~/adguard-home
 docker compose down
 docker compose up -d
@@ -83,9 +88,12 @@ docker compose up -d
 ```
 
 Verify mounts (same inspect command as above).
+
+{% raw %}
 ```sh
 docker inspect adguardhome --format '{{range .Mounts}}{{println .Source "->" .Destination}}{{end}}'
 ```
+{% endraw %}
 
 Notes you’ll need exactly once
 Pick the right container path: every app has a data dir; check its docs or container README.
