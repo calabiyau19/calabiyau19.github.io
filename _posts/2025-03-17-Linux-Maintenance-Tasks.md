@@ -4,7 +4,8 @@ title: "Linux Maintenance Tasks"
 date:  2025-03-17
 description:  Keeping your Linux system clean and up to date is essential. Here are some easy maintenance routines to follow.  Please check out number eleven for a good app to help you manage files easily.  Hint. ncdu
 ---
-
+8/01/2025 UPDATE:  Wrote a weekly maintenance script with Chad's help. Copied it to a folder called ~/Scripts on each Ubuntu and Debian machine.  Using Tabby, I can access each machine quickly via ssh (key pairs set up already) and run this copied command, ~/Scripts/ubuntu-maintenance.sh, which runs the script that does all the updating and cleanup functions.  Since each 'machine' is in its own VM I can open a new tab (to a new machine) while the script is still running on the previous machine.  So, can run through all the machines weekly in less than 10 minutes.  There are great products to help automate this but for ten minutes once a week the speed of this method is fine.  
+The maintenance script is at the end of this post
 
 TL:DR   Always run at least these weekly, if not more often.
 
@@ -216,8 +217,50 @@ Schedule: Run monthly.
 
 
 
-Suggested Maintenance Schedule
-Weekly: Steps 4, 10
-Monthly: Steps 1, 2, 5, 6, 8, 11
-Quarterly: Steps 7
-As Needed: Steps 3, 9
+Maintenance Script for Ubuntu + Debian machines
+
+
+#!/bin/bash
+
+# Ubuntu Weekly Maintenance Script
+# Run manually with: sudo ~/Scripts/ubuntu-maintenance.sh
+
+set -euo pipefail
+
+# Check if running as root
+if [[ "$EUID" -ne 0 ]]; then
+  echo "Please run as root: sudo $0"
+  exit 1
+fi
+
+echo "=== Starting Ubuntu Maintenance ==="
+
+# Update and upgrade
+echo ">>> Running apt update and upgrade..."
+apt update && apt upgrade -y
+
+# Cleanup tasks
+echo ">>> Running autoremove, clean, and autoclean..."
+apt autoremove -y && apt clean && apt autoclean -y
+
+# Remove orphaned config files
+echo ">>> Purging orphaned package config files..."
+dpkg -l | awk '/^rc/ {print $2}' | xargs -r dpkg --purge
+
+# Extra purge cleanup
+echo ">>> Running additional autoremove --purge..."
+apt-get autoremove --purge -y
+
+# Clean apt cache
+echo ">>> Final apt-get clean..."
+apt-get clean
+
+# Vacuum logs
+echo ">>> Vacuuming journal logs to 99M..."
+journalctl --vacuum-size=99M
+
+# Clear user's cache
+echo ">>> Clearing user cache for mark..."
+rm -rf /home/mark/.cache/*
+
+echo "=== Maintenance Complete ==="
