@@ -4,7 +4,7 @@ title: "Linux Maintenance Tasks"
 date:  2025-03-17
 description:  Keeping your Linux system clean and up to date is essential. Here are some easy maintenance routines to follow.  Please check out number eleven for a good app to help you manage files easily.  Hint. ncdu
 ---
-8/01/2025 UPDATE:  Wrote a weekly maintenance script with Chad's help. Copied it to a folder called ~/Scripts on each Ubuntu and Debian machine.  Using Tabby, I can access each machine quickly via ssh (key pairs set up already) and run this copied command, ~/Scripts/ubuntu-maintenance.sh, which runs the script that does all the updating and cleanup functions.  Since each 'machine' is in its own VM I can open a new tab (to a new machine) while the script is still running on the previous machine.  So, can run through all the machines weekly in less than 10 minutes.  There are great products to help automate this but for ten minutes once a week the speed of this method is fine.  
+8/01/2025 UPDATE:  Wrote a weekly maintenance script (with help). Copied it to a folder called ~/Scripts on each Ubuntu and Debian machine.  Using Tabby, I can access each machine quickly via ssh (key pairs set up already) and run this copied command, ~/Scripts/ubuntu-maintenance.sh, which runs the script that does all the updating and cleanup functions.  Since each 'machine' is in its own VM I can open a new tab (to a new machine) while the script is still running on the previous machine.  So, can run through all the machines weekly in less than 10 minutes.  There are great products to help automate this but for ten minutes once a week the speed of this method is fine.  
 The maintenance script is at the end of this post
 
 TL:DR   Always run at least these weekly, if not more often.
