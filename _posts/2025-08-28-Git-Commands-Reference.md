@@ -3,9 +3,8 @@ layout: post
 title: "Git Command Reference Sheet"
 draft: false
 date:  2025-08-28
-description: Most used Git commands to help maintain and update your GitHub repo hosted.  Git tracks changes not files.  Most operations are reversible if you understand the process
+description: Most used Git commands to help maintain and update your GitHub repo.  Git tracks changes not files.  Most operations are reversible if you understand the process
 ---
-
 
 
 
