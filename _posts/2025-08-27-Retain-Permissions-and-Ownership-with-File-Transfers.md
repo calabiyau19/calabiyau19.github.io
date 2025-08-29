@@ -1,20 +1,24 @@
 ---
 layout: post
-title: "How to transfer files on linux while preserving permissions and ownership"
+title: "How to transfer files on Linux while preserving permissions and ownership"
 draft: false
 date:  2025-08-28
-description: Here is a step-by-step procedure for transferring files from one Linux box (LPTHP) to your Docker VM (or any Linux system), preserving permissions and ownership, with all required commands explicitly stated, using the 'username username' (UID and GID = 1000) command. 
+description: Step-by-step procedure for transferring files from one Linux box to your Docker VM (or any Linux system), while preserving permissions and ownership, with all required commands explicitly stated, using the 'username username' (UID and GID = 1000) command. 
 ---
 
 
-File Transfer: LPTHP to Docker VM (Preserving Permissions & Ownership)
+File Transfer Use Case: LPTHP to Docker VM (Preserving Permissions & Ownership)
 Here is a step-by-step procedure for transferring files from LPTHP to your Docker VM (or any Linux system), preserving permissions and ownership, with all required commands explicitly stated, using the 'mark user' (UID and GID = 1000) command.
-Goal
+
+### Goal
+
 Copy files and folders from LPTHP (Linux Mint box) to docker-vm (the VM running your Docker containers).
 Preserve ownership (mark:mark → UID:GID = 1000:1000)
 Preserve permissions (e.g., rw-r--r--)
 Correct any issues after the transfer if needed.
+
 Step 1: Preparation on Both Machines
+
 1.1 Ensure rsync is installed
 Run on both LPTHP and docker-vm:
 
