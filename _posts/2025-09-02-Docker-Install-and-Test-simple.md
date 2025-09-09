@@ -7,9 +7,6 @@ description: This appears in other articles on this site but since it is used in
 ---
 
 
-
-	# Docker Installation Guide
-
 ## Complete Docker Setup on Ubuntu/Debian
 
 **1. Update the system:**
