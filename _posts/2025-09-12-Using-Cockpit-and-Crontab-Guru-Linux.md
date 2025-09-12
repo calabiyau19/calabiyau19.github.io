@@ -27,7 +27,7 @@ curl https://crontab.guru/install | sh
 ```
 
 **Managed as a systemd service:**
-```bash
+```sh
 sudo systemctl start crontab-guru-dashboard
 sudo systemctl stop crontab-guru-dashboard
 sudo systemctl restart crontab-guru-dashboard
@@ -35,7 +35,7 @@ sudo systemctl status crontab-guru-dashboard
 ```
 
 **Auto-start on boot:**
-```bash
+```sh
 sudo systemctl enable crontab-guru-dashboard
 ```
 
@@ -82,12 +82,12 @@ The configuration file `/etc/cronitor/cronitor.json` contains:
 
 ### 1. Add a new cron job and verify in Crontab Guru
 
-```bash
+```sh
 crontab -e
 ```
 
 Example job:
-```bash
+```sh
 0 3 * * * /home/mark/scripts/backup.sh
 ```
 
@@ -110,17 +110,17 @@ Example job:
 ### 4. Manage Crontab Guru via systemd
 
 **Restart dashboard:**
-```bash
+```sh
 sudo systemctl restart crontab-guru-dashboard
 ```
 
 **Check status:**
-```bash
+```sh
 systemctl status crontab-guru-dashboard --no-pager
 ```
 
 **Enable auto-start on boot:**
-```bash
+```sh
 sudo systemctl enable crontab-guru-dashboard
 ```
 
