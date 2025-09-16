@@ -5,6 +5,7 @@ draft: false
 date: 2025-09-15
 description:  After almost losing my Proxmox server - thank God for recent backups and snapshots - I decided to document how the storage was set up this time, which was more logical than the initial setup.  Two internal NVMe SSDs and one external SSD.  General outline of where to host the OS, backups, VMs, and external data used by the VMs, including how to mount it into the Docker containers correctly.  
 ---
+NOTE: The article "Mount and share external drives uploaded on 09.12.2025 has easy to follow step by step directions for mounting external drives on a server (in this case Proxmox) and having docker containers access it from inside VMs running on the same server. 
 
 ## Proxmox Server NVMe Storage Overview Guide
 
