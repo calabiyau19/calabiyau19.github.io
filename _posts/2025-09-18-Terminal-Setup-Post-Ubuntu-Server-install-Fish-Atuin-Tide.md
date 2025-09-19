@@ -39,7 +39,7 @@ echo "alias f='fish'" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### 3. Enter the Fish Sfhell
+### 3. Enter the Fish Shell
 
 ```sh
 f
