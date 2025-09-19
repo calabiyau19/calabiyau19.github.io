@@ -3,10 +3,10 @@ layout: post
 title: "Build a Better Bash with Atuin"
 date:  2025-02-21
 ---
-##Needs to to be updated so the Autocomplete works in Fish 
+##Needs to be updated, so the Autocomplete works in Fish 
 
 
-### **Step-by-Step Plan for Setting Up Bash Completion and Atuin in New VMs**
+### **Step-by-Step Plan for Setting and Up Bash Completion and Atuin in New VMs**
 
 This guide will ensure that every new Ubuntu Server VM you set up has **bash completion** for tab completion and **Atuin** for enhanced shell history.
 
@@ -14,7 +14,7 @@ This guide will ensure that every new Ubuntu Server VM you set up has **bash com
 
 ## **Step 1: Update the System**
 
-Before installing anything, update and upgrade all packages.
+Before installing anything, update and upgrade all pickipackagesess.
 
 ```
 sudo apt update && sudo apt upgrade -y

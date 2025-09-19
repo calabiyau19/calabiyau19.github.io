@@ -1,14 +1,14 @@
 ---
 title: Setting up the Terminal Post Server Installation in Linux
 date: 2025-09-18
-description: After every installation of an Ubuntu server in a VM that I will be using to hold a Docker style application, this is how I set up the terminal so that every one of my servers operates with the same terminal configuration.  It got a little crazy with twenty different servers and pcs trying to remember which ones had only sh or which ones had the full stack of Fish, Atuin, Tide and custom prompts. So I made them all the same. 
+description: After every installation of an Ubuntu server in a VM that I will be using to hold a Docker style application, this is how I set up the terminal so that every one of my servers operates with the same terminal configuration.  It got a little crazy with twenty different servers and pcs trying to remember which ones had only Bash or which ones had the full stack of Fish, Atuin, Tide and custom prompts. So I made them all the same. 
 ---
 
 # Setting up the Terminal Post Server Installation in Linux
 
 ## Overview
 
-This template provides a standardized terminal configuration for Ubuntu servers running Docker applications in VMs. The setup maintains consistency across all server instances while providing enhanced shell functionality. The idea is that I will ssh (with key pairs) into the linux based machines and land in a Bash shell by default - which helps with running scripts across the network.  Then by simple pressing "f" I am switched into Fish.  In either shell, the history via the up arrow is maintained with Atuin.  
+This template provides a standardized terminal configuration for Ubuntu servers running Docker applications in VMs. The setup maintains consistency across all server instances while providing enhanced shell functionality. The idea is that I will ssh (with key pairs) into the Linux based machines and land in a Bash shell by default - which helps with running scripts across the network.  Then by simple pressing "f" I am switched into Fish.  In either shell, the history via the up arrow is maintained with Atuin.  
 
 ## Shell Configuration Template (Post-Update Ubuntu Server)
 
@@ -35,11 +35,11 @@ sudo apt update && sudo apt install -y fish curl git
 ### 2. Set Bash Alias for Launching Fish
 
 ```sh
-echo "alias f='fish'" >> ~/.shrc
-source ~/.shrc
+echo "alias f='fish'" >> ~/.bashrc
+source ~/.bashrc
 ```
 
-### 3. Enter the Fish Shell
+### 3. Enter the Fish Sfhell
 
 ```sh
 f
