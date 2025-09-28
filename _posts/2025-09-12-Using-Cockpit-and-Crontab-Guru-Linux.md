@@ -19,6 +19,8 @@ This document explains how **Crontab Guru (Cronitor Dashboard)** and **Cockpit**
 - Powered by the **Cronitor CLI** (`/usr/bin/cronitor`)
 - Configured via `/etc/cronitor/cronitor.json`
 
+<img src="/assets/img/crontab-guru-main-screen.png" alt="Crontab Guru dashboard showing scheduled jobs" width="800">
+
 ### How it runs
 
 **Installation:**
@@ -52,7 +54,7 @@ The configuration file `/etc/cronitor/cronitor.json` contains:
 - View cron jobs for the configured users
 - Track execution times and job history
 - Verify new cron entries are picked up
-- Use it alongside crontab.guru (web tool) for building cron expressions
+- Use it alongside crontab guru (web tool) for building cron expressions
 
 ## Cockpit
 
@@ -62,6 +64,8 @@ The configuration file `/etc/cronitor/cronitor.json` contains:
 - Accessible at: `https://localhost:9090/`
 - Provides a friendly GUI for managing services, logs, and system health
 
+<img src="/assets/img/cockpit-main-screen.png" alt="Cockpit main dashboard showing system overview" width="800">
+
 ### What you can do with it
 
 - **System monitoring**: real-time CPU, memory, disk, and network graphs
@@ -70,6 +74,8 @@ The configuration file `/etc/cronitor/cronitor.json` contains:
 - **Storage**: view partitions, usage, and disks
 - **Users**: manage accounts, sessions, and passwords
 - **Software updates**: install updates via GUI (with `cockpit-packagekit`)
+
+<img src="/assets/img/cockpit-software-update-screen.png" alt="Cockpit software updates interface" width="700">
 
 ### Good ways to use Cockpit
 
