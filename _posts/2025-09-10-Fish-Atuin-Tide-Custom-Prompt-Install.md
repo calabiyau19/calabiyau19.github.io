@@ -5,9 +5,9 @@ draft: false
 date:  2025-09-10
 description: This is an updated, cleaner and easier to follow outline on how to install Fish, Atuin, Tide and set custom left and right prompts in the terminal.  You still run Tide Configure to set up the Tide prompt initially.  
 ---
-NOTE:  I set up all my machines to default to the Bash terminal and set up an alias f="fish" so that when I ssh in I can hit f and be in the Fish shell.  It seems to work better this way with scripting across many servers.  Also, Ctrl-D drops you out of Fish back to Bash and one more Ctrl-D exits the ssh session.
+NOTE: I set up all my machines to default to the Bash terminal and set up an alias f="fish" so that when I ssh in I can hit f and be in the Fish shell.  It seems to work better this way with scripting across many servers.  Also, Ctrl-D drops you out of Fish back to Bash and one more Ctrl-D exits the ssh session.
 
-NOTE:  I have not fully tested this on CachyOS or any other Arch based system yet. In the process of doing CachyOS now and will update this article if needed.  
+NOTE: I have not fully tested this on CachyOS or any other Arch based system yet. In the process of doing CachyOS now and will update this article if needed.  
 
 # Fish + Atuin + Tide Setup Commands
 *Copy/paste these commands in sequence for each server*

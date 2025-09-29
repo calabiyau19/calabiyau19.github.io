@@ -19,7 +19,15 @@ This document explains how **Crontab Guru (Cronitor Dashboard)** and **Cockpit**
 - Powered by the **Cronitor CLI** (`/usr/bin/cronitor`)
 - Configured via `/etc/cronitor/cronitor.json`
 
-<img src="/assets/img/crontab-guru-main-screen.png" alt="Crontab Guru dashboard showing scheduled jobs" width="800">
+<!-- Main focused screenshot -->
+<img src="/assets/img/crontab-jobs-detail.png" alt="Crontab Guru job details" width="800">
+
+<!-- Small thumbnail linking to full view -->
+<a href="/assets/img/crontab-full-window.png" target="_blank">
+    <img src="/assets/img/crontab-full-window.png" alt="Full Crontab window" width="200">
+</a>
+<p>Click for full window view</p>
+
 
 ### How it runs
 
