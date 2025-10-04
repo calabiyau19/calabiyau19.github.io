@@ -209,7 +209,7 @@ date: 2025-09-25
 description: Complete guide to installing Proxmox VE on a mini PC
 ---
 
-# Setting up Proxmox VE
+## Setting up Proxmox VE
 
 First, download the ISO from the official site:
 
