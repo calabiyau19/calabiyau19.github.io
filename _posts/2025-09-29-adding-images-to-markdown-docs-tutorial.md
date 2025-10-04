@@ -6,13 +6,13 @@ date: 2025-09-29
 description: A simple tutorial for adding and sizing images in markdown files using VS Code, with practical examples for Linux documentation websites.
 ---
 
-# Adding Images to Markdown Documentation
+## Adding Images to Markdown Documentation
 
-## Folder Structure Setup
+### Folder Structure Setup
 
 In VS Code, organize your project with a dedicated images folder:
 
-```
+```html
 your-documentation-site/
 ├── _posts/
 │   ├── 2025-09-25-your-article.md
@@ -80,7 +80,9 @@ your-documentation-site/
 
 ### Example 1: Small UI Element (150px)
 
+```html
 <img src="/assets/images/terminal-icon.png" alt="Terminal icon in taskbar" width="150">
+```
 
 ```html
 <img src="/assets/images/terminal-icon.png" alt="Terminal icon in taskbar" width="150">
@@ -92,7 +94,9 @@ your-documentation-site/
 
 ### Example 2: Medium Screenshot (600px)
 
+```html
 <img src="/assets/images/vs-code-interface.png" alt="VS Code editor showing markdown file" width="600">
+```
 
 ```html
 <img src="/assets/images/vs-code-interface.png" alt="VS Code editor showing markdown file" width="600">
@@ -213,14 +217,19 @@ description: Complete guide to installing Proxmox VE on a mini PC
 
 First, download the ISO from the official site:
 
+```html
 <img src="/assets/images/proxmox-download-page.png" alt="Proxmox download page showing latest ISO" width="600">
+```
 
 Next, boot into the installer. You should see this screen:
 
+```html
 <img src="/assets/images/proxmox-installer-menu.png" alt="Proxmox installer boot menu" width="800">
+```
 
 The installation will create a dashboard like this:
 
+```html
 <img src="/assets/images/proxmox-final-dashboard.png" alt="Completed Proxmox installation dashboard" width="800">
 ```
 
