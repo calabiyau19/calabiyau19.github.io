@@ -6,8 +6,6 @@ date: 2025-09-12
 description: Crontab Guru (Cronitor Dashboard) & Cockpit are GUI fronts for running cron jobs and all things system administration related on Linux Mint.
 ---
 
-# Crontab Guru (Cronitor Dashboard) & Cockpit for Linux
-
 This document explains how **Crontab Guru (Cronitor Dashboard)** and **Cockpit** work on Linux Mint, how they are run, and provides example workflows for daily use.
 
 ## Crontab Guru (Cronitor Dashboard)
@@ -28,15 +26,16 @@ This document explains how **Crontab Guru (Cronitor Dashboard)** and **Cockpit**
 </a>
 <p>Click for full window view</p>
 
-
 ### How it runs
 
 **Installation:**
+
 ```sh
 curl https://crontab.guru/install | sh
 ```
 
 **Managed as a systemd service:**
+
 ```sh
 sudo systemctl start crontab-guru-dashboard
 sudo systemctl stop crontab-guru-dashboard
@@ -45,6 +44,7 @@ sudo systemctl status crontab-guru-dashboard
 ```
 
 **Auto-start on boot:**
+
 ```sh
 sudo systemctl enable crontab-guru-dashboard
 ```
@@ -101,6 +101,7 @@ crontab -e
 ```
 
 Example job:
+
 ```sh
 0 3 * * * /home/mark/scripts/backup.sh
 ```
@@ -124,16 +125,19 @@ Example job:
 ### 4. Manage Crontab Guru via systemd
 
 **Restart dashboard:**
+
 ```sh
 sudo systemctl restart crontab-guru-dashboard
 ```
 
 **Check status:**
+
 ```sh
 systemctl status crontab-guru-dashboard --no-pager
 ```
 
 **Enable auto-start on boot:**
+
 ```sh
 sudo systemctl enable crontab-guru-dashboard
 ```
