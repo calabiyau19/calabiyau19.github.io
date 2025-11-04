@@ -3,7 +3,7 @@ layout: post
 title: "Setup SSH access on Ubuntu server"
 draft: false
 date: 2025-10-09
-description: A simple tutorial for setting up SSH access into a new Ubuntu server and adding SSH to your managment pc or laptop.  Bonus section on setting up SSH key pair acess as it is much easier longer term.  
+description: A simple tutorial for setting up SSH access into a new Ubuntu server and adding SSH to your managment pc or laptop.  Bonus section on setting up SSH key pair acess as it is much easier in the long term.  
 ---
 
 ## SSH Setup Guide for Ubuntu
@@ -59,6 +59,7 @@ You should see output showing `active (running)` in green text. Press `q` to exi
 
 ```sh
 sudo systemctl enable ssh
+sudo systemctl start ssh
 ```
 
 This ensures SSH starts automatically whenever your server reboots.
@@ -77,7 +78,7 @@ Look for an IPv4 address in the output. It will typically be in one of these for
 
 **Write down this IP address** - you'll need it to connect from your laptop.
 
-### Step 7: Configure Firewall (Recommended)
+### Step 7: Configure Firewall (Recommended) May not be needed. Try without first.
 
 ```sh
 sudo ufw allow ssh
