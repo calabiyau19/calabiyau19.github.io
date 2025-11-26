@@ -7,7 +7,7 @@ description: "Complete guide to download, set up, and run Whisper AI on a Linux 
 ---
 
 
-The biggest benefit to using a locally hosted Whisper AI dictation model is that, in addition to having all your data locally hosted, it can also be used in **every** application that you would normally type in - **something Whisper AI online cannot do**. Things that do not work in Whisper AI, like Libra Office Writer or this program, VS Code, or even a simple text editor or a terminal, locally hosting Whisper AI will allow you to have dictation and transcription available for all those applications as well.
+The biggest benefit to using a locally hosted Whisper AI dictation model is that, in addition to having all your data locally hosted, it can also be used in every application that you would normally type in - something Whisper AI online cannot do. Things that do not work in Whisper AI, like Libra Office Writer or this program, VS Code, or even a simple text editor or a terminal, locally hosting Whisper AI will allow you to have dictation and transcription available for all those applications as well.
 
 ## Local Whisper Dictation Setup (Linux Mint 22.2)
 
