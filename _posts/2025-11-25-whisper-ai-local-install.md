@@ -3,7 +3,7 @@ layout: post
 title: "Whisper AI self hosted complete installation guide"
 draft: false
 date: 2025-11-25
-description: "Complete guide to download, setup and run Whisper AI on a Linux Mint (Ubuntu) laptop. Will be adding actual performance results later since the installation allows you to increase the transcription accuracy for a trade off in slower speed supposedly. Have tried both the tiny and base models and they are both pretty fast. Definitely comparable to the Whisper AI online model."
+description: "Complete guide to download, setup and run Whisper AI on a Linux Mint (Ubuntu) laptop. I Will be adding actual performance results later since the installation allows you to increase the transcription accuracy for a trade off in slower speed supposedly. Have tried both the tiny and base models and they are both pretty fast. Definitely comparable to the Whisper AI online model. Note: this setup alsow gives you the abiltiy to explicitly set the number of processors to work om the translation part.  These instructions explicity set it to 8 threads, which you can change to whatever you want. "
 ---
 
 
@@ -20,11 +20,10 @@ The best benefit to using a locally hosted Whisper AI dictation model is that in
 * Real-time continuous dictation
 * Type directly into the active window
 * Global hotkey activation
-* Better Whisper model
-* GUI app
-* Integrate directly with ChatGPT / Claude Desktop
-* Run Whisper from another machine on your LAN
-* Something else
+* Test Better Whisper models - like base as opposed to tiny
+* GUI app - dropped from project
+* Integrate directly with ChatGPT / Claude Desktop - dropped from project, not needed
+* Access Whisper from another machine on your LAN - dropped from project, use it exclusively on the laptop
 
 ---
 
@@ -496,7 +495,7 @@ This confirms Section 3 is complete.
 
 ## Section 4 – Global Hotkey for Whisper Typing (Ctrl+Alt+W)
 
-This section wires your `whisper_type.sh` script to a global keyboard shortcut so you can start a short dictation and have it typed into the active window with a single key combo.
+This section wires your `whisper_type.sh` script to a global keyboard shortcut, so you can start a short dictation and have it typed into the active window with a single key combo.
 
 ---
 
