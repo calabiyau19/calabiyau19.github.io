@@ -3,11 +3,11 @@ layout: post
 title: "Whisper AI self hosted complete installation guide"
 draft: false
 date: 2025-11-25
-description: "Complete guide to download, setup and run Whisper AI on a Linux Mint (Ubuntu) laptop. I Will be adding actual performance results later since the installation allows you to increase the transcription accuracy for a trade off in slower speed supposedly. Have tried both the tiny and base models and they are both pretty fast. Definitely comparable to the Whisper AI online model. Note: this setup alsow gives you the abiltiy to explicitly set the number of processors to work om the translation part.  These instructions explicity set it to 8 threads, which you can change to whatever you want. "
+description: "Complete guide to download, set up, and run Whisper AI on a Linux Mint (Ubuntu) laptop. I will be adding actual performance results later since the installation allows you to increase the transcription accuracy for a trade-off in slower speed, supposedly. Have tried both the tiny and base models, and they are both pretty fast. Definitely comparable to the Whisper AI online model. Note: this setup also gives you the ability to explicitly set the number of processors to work on the translation part.  These instructions explicitly set it to 8 threads, which you can change to whatever you want."
 ---
 
 
-The best benefit to using a locally hosted Whisper AI dictation model is that in addition to having all your data locally hosted, it can also be used in every application that you would normally type in - something Whisper AI online cannot do. Things that do not work in Whisper AI like Libra Office Writer or this program, VS Code, or even a simple text editor or a terminal, locally hosting Whisper AI will allow you to have dictation and transcription available for all those applications as well.
+The biggest benefit to using a locally hosted Whisper AI dictation model is that, in addition to having all your data locally hosted, it can also be used in **every** application that you would normally type in - **something Whisper AI online cannot do**. Things that do not work in Whisper AI, like Libra Office Writer or this program, VS Code, or even a simple text editor or a terminal, locally hosting Whisper AI will allow you to have dictation and transcription available for all those applications as well.
 
 ## Local Whisper Dictation Setup (Linux Mint 22.2)
 
