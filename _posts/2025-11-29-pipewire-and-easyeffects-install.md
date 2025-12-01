@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Pipewire and EasyEffects Installation"  
+title: "Pipewire and EasyEffects Laptop Sound Utility Installation"  
 draft: false
 date: 2025-11-29
 description: "Updated my Linux Mint 22.2 laptop to use pipewire instead of pulse audio that I've been using for almost a year due to original sound issues with the laptop. This document also details the installation and setup of a program called Easy Effects which is a sound program add-on to be able to fine-tune the sound coming from your speakers in my case laptop speakers."
