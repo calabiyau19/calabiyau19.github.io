@@ -5,7 +5,7 @@ draft: false
 date: 2025-11-25
 description: "Complete guide to download, set up, and run Whisper AI on a Linux Mint (Ubuntu) laptop. I will be adding actual performance results later since the installation allows you to increase the transcription accuracy for a trade-off in slower speed, supposedly. Have tried both the tiny and base models, and they are both pretty fast. Definitely comparable to the Whisper AI online model. Note: this setup also gives you the ability to explicitly set the number of processors to work on the translation part.  These instructions explicitly set it to 8 threads, which you can change to whatever you want."
 ---
-
+**NOTE: IF YOU JUST WANT TO INSTALL WHISPER LOCALLY AND HAVE IT WORK SIMILARLY TO WHISPER AI ONLINE, SKIP TO STEP 5.  STEPS 1-4 DOCUMENT THE PROCESS THAT I WENT THROUGH FROM KNOWING NOTHING ABOUT SELF HOSTING WHISPER AI TO GETTING A FUNCTIONING VERSION RUNNING ON MY LAPTOP.**
 
 The biggest benefit to using a locally hosted Whisper AI dictation model is that, in addition to having all your data locally hosted, it can also be used in every application that you would normally type in - something Whisper AI online cannot do. Things that do not work in Whisper AI, like Libra Office Writer or this program, VS Code, or even a simple text editor or a terminal, locally hosting Whisper AI will allow you to have dictation and transcription available for all those applications as well.
 
@@ -1047,3 +1047,93 @@ You now have a complete local Whisper dictation system with multiple usage modes
 4. **Whisper-AI-style** - Ctrl+Alt+Q (start) and Ctrl+Alt+Z (stop) for flexible dictation
 
 All scripts use local processing - no internet required for transcription. The system works in any application on your Linux Mint system.
+
+
+## Additional Notes: Switching Models and Performance Tips
+
+### Switching to a Different Whisper Model
+
+If you want to experiment with different Whisper models (`tiny`, `base`, `small`, `medium`, or `large-v3`), you can do so by editing your transcription script (`stop_whisper_simple.sh`).
+
+Look for the `--model` line in the transcription command:
+```sh
+whisper-ctranslate2 \
+  --model base \
+  --language en \
+  ...
+```
+
+To try a different model, simply change the `--model` argument. For example:
+```sh
+--model small
+```
+
+### First-Time Use of a New Model
+
+Each model must be downloaded the first time you use it. Because these models are large (e.g. `small` is ~244 MB, `medium` is ~769 MB), the first run will take longer while the model is downloaded from Hugging Face.
+
+To allow this download, make sure offline mode is disabled during that first run:
+```sh
+# export HF_HUB_OFFLINE=1
+```
+
+Once the model is cached locally, you can re-enable offline mode:
+```sh
+export HF_HUB_OFFLINE=1
+```
+
+Transcription with the new model will then be just as fast as your previous one, with better accuracy depending on the model size.
+
+### Comparing Model Performance (Optional)
+
+If you're interested in comparing how different models perform on your system, you can add timing logic to your script.
+
+Here's an example using `date`:
+```sh
+START=$(date +%s)
+
+whisper-ctranslate2 \
+  --model small \
+  --language en \
+  --threads 8 \
+  --output_format txt \
+  --output_dir /tmp \
+  "$AUDIO_FILE"
+
+END=$(date +%s)
+echo "Transcription took $((END - START)) seconds"
+```
+
+This will show how long each transcription takes, making it easier to compare different models under the same conditions.
+
+### Observing CPU Usage
+
+You may notice that not all CPU cores are fully used, even if you set `--threads 8`. This is normal:
+
+* Whisper processing is done in stages; not all stages can use all threads at once.
+* Shorter audio clips and simpler speech may not utilize all available cores.
+* Longer recordings (30+ seconds) or larger models (`medium`, `large-v3`) tend to scale CPU usage more effectively.
+
+To monitor live CPU usage:
+```sh
+htop
+```
+
+Or:
+```sh
+top
+```
+
+Look for how many cores spike during transcription, and how long they stay active.
+
+### Model Sizes and Tradeoffs
+
+| Model | Size (approx) | Accuracy | Speed (CPU) |
+|-------|---------------|----------|-------------|
+| `tiny` | 39 MB | Lowest | Fastest |
+| `base` | 74 MB | Better | Very fast |
+| `small` | 244 MB | Good | Moderate |
+| `medium` | 769 MB | Very good | Slower |
+| `large-v3` | 1.5 GB | Best | Slowest |
+
+Choose a model based on your balance of speed vs. transcription quality. For real-time use, `base` or `small` offer the best trade off.
