@@ -3,15 +3,15 @@ layout: post
 title: "Whisper AI self hosted complete installation guide"
 draft: false
 date: 2025-11-25
-description: "Complete guide to download, set up, and run Whisper AI on a Linux Mint (Ubuntu) laptop. I will be adding actual performance results later since the installation allows you to increase the transcription accuracy for a trade-off in slower speed, supposedly. Have tried both the tiny and base models, and they are both pretty fast. Definitely comparable to the Whisper AI online model. Note: this setup also gives you the ability to explicitly set the number of processors to work on the translation part.  These instructions explicitly set it to 8 threads, which you can change to whatever you want."
+description: "Complete guide to download, set up, and run Whisper AI on a Linux Mint (Ubuntu) laptop. Have tried the tiny, base and smalle models, and they are close in speed to Whisper AI. The small model is a little slower in my testing but very accurate. Note: this setup also gives you the ability to explicitly set the number of processors to work on the translation part.  These instructions explicitly set it to 8 threads, which you can change to whatever you want."
 ---
-**NOTE: IF YOU JUST WANT TO INSTALL WHISPER LOCALLY AND HAVE IT WORK SIMILARLY TO WHISPER AI ONLINE, SKIP TO STEP 5.  STEPS 1-4 DOCUMENT THE PROCESS THAT I WENT THROUGH FROM KNOWING NOTHING ABOUT SELF HOSTING WHISPER AI TO GETTING A FUNCTIONING VERSION RUNNING ON MY LAPTOP.**
+**NOTE: IF YOU JUST WANT TO INSTALL WHISPER LOCALLY AND HAVE IT WORK SIMILARLY TO WHISPER AI ONLINE, SKIP TO [Section 5](#section-5).  SECTIONS 1-4 DOCUMENT THE PROCESS THAT I WENT THROUGH FROM KNOWING NOTHING ABOUT SELF HOSTING A WHISPER VERSION TO GETTING A FUNCTIONING VERSION RUNNING ON MY LAPTOP.**
 
-The biggest benefit to using a locally hosted Whisper AI dictation model is that, in addition to having all your data locally hosted, it can also be used in every application that you would normally type in - something Whisper AI online cannot do. Things that do not work in Whisper AI, like Libra Office Writer or this program, VS Code, or even a simple text editor or a terminal, locally hosting Whisper AI will allow you to have dictation and transcription available for all those applications as well.
+The benefits to using a locally hosted Whisper AI dictation model are that your data is locally hosted, and that it can also be used in every application that you would normally type in - something Whisper AI online cannot do. Things that do not work in Whisper AI, like Libra Office Writer or this program, VS Code, a simple text editor or a terminal, Whisper Local will allow you to dictate and transcribe to all those applications as well.
 
 ## Local Whisper Dictation Setup (Linux Mint 22.2)
 
-**Project:** Install Whisper AI locally, so I can use it anytime I want in any application on any computer running on my home network.
+**Project:** Install Whisper AI locally, so it can be used in any application running on management PC.  Note: After installing and running Whisper Local, I realized that all the many servers available on the home network through my laptop (SSH terminals and web access pages) would also have Whisper Local available for dictation and transcription - through the laptop since that is how I access them all. This was a bonus.  
 
 **Project Goals:**
 
@@ -20,10 +20,7 @@ The biggest benefit to using a locally hosted Whisper AI dictation model is that
 * Real-time continuous dictation
 * Type directly into the active window
 * Global hotkey activation
-* Test Better Whisper models - like base as opposed to tiny
-* GUI app - dropped from project
-* Integrate directly with ChatGPT / Claude Desktop - dropped from project, not needed
-* Access Whisper from another machine on your LAN - dropped from project, use it exclusively on the laptop
+* Test Better Whisper models - like the base and small models in addition to the tiny model
 
 ---
 
@@ -576,9 +573,9 @@ This finishes the hotkey setup for the one-shot typing script.
 
 ---
 
-## Section 5 – Whisper-AI-Style Dictation (Start/Stop Hotkeys)
+## Section 5 – Whisper-AI-Style Dictation (Start/Stop Hotkeys) {#section-5}
 
-This section creates a true Whisper-AI-style dictation system with two separate hotkeys:
+##This section creates a true Whisper-AI-style dictation system with two separate hotkeys:##
 
 * **Ctrl+Alt+Q** = Start recording
 * **Ctrl+Alt+Z** = Stop recording and immediately transcribe
