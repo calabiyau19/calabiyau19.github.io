@@ -3,7 +3,7 @@ layout: post
 title: "Whisper AI self hosted complete installation guide"
 draft: false
 date: 2025-11-25
-description: "Complete guide to download, set up, and run Whisper AI on a Linux Mint (Ubuntu) laptop. Have tried the tiny, base and smalle models, and they are close in speed to Whisper AI. The small model is a little slower in my testing but very accurate. Note: this setup also gives you the ability to explicitly set the number of processors to work on the translation part.  These instructions explicitly set it to 8 threads, which you can change to whatever you want."
+description: "Complete guide to download, set up, and run Whisper AI on a Linux Mint (Ubuntu) laptop. Have tried the tiny, base and small models, and they are close in speed to Whisper AI. The small model is a little slower in my testing but very accurate. Note: this setup also gives you the ability to explicitly set the number of processors to work on the translation part.  These instructions explicitly set it to 8 threads, which you can change to whatever you want."
 ---
 **NOTE: IF YOU JUST WANT TO INSTALL WHISPER LOCALLY AND HAVE IT WORK SIMILARLY TO WHISPER AI ONLINE, SKIP TO [Section 5](#section-5--whisper-ai-style-dictation-startstop-hotkeys).  SECTIONS 1-4 DOCUMENT THE PROCESS THAT I WENT THROUGH FROM KNOWING NOTHING ABOUT SELF HOSTING A WHISPER VERSION TO GETTING A FUNCTIONING VERSION RUNNING ON MY LAPTOP.**
 
