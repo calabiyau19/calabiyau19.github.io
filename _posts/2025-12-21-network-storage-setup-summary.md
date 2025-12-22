@@ -3,7 +3,7 @@ layout: post
 title: "Network Storage Setup: External SSD on Proxmox with Samba"
 draft: false
 date: 2025-12-21
-description: "Brief description here"
+description: "This guide explains how to connect an external SSD to a Proxmox host, pass it through to a VM, configure Samba for network sharing, and access it from Linux and Windows clients."
 categories: [networking, samba, windows]
 ---
 

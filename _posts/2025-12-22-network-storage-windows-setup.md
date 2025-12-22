@@ -1,7 +1,9 @@
 ---
 layout: default
+draft: false
 title: "Windows Access to Samba Network Storage"
 date: 2025-12-22
+description: "This guide documents how to configure Windows machines to access the Samba network storage server"
 categories: [networking, samba, windows]
 ---
 

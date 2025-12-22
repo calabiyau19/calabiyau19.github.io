@@ -1,11 +1,11 @@
 ---
-layout: default
+layout: post
+draft: false
 title: "Creating Network Storage on External Drive and YouTube Download System"
 date: 2025-12-21
+description: "This guide documents setting up a centralized Samba network storage server on Proxmox using an external SSD"
 categories: [networking, samba, windows]
 ---
-
-
 
 ## Creating Network Storage on External Drive and YouTube Download System
 
