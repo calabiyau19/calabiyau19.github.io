@@ -1,3 +1,11 @@
+---
+layout: post
+title: "Ghostfolio Complete Setup Guide"  
+draft: false
+date: 2025-12-01
+description: "Complete guide for installing Ghostfolio using Docker on Ubuntu 24.04, setting up paper trading portfolios and real investment tracking, and migrating to the latest version."
+---
+
 ## Ghostfolio Installation and Setup Guide
 
 Complete guide for installing Ghostfolio using Docker on Ubuntu 24.04, setting up paper trading portfolios and real investment tracking, and migrating to the latest version.

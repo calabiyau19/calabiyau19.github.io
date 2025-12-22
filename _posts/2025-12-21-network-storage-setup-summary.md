@@ -1,10 +1,11 @@
 ---
-layout: default
+layout: post
 title: "Network Storage Setup: External SSD on Proxmox with Samba"
+draft: false
 date: 2025-12-21
+description: "Brief description here"
 categories: [networking, samba, windows]
 ---
-
 
 
 ## Network Storage Setup: External SSD on Proxmox with Samba
