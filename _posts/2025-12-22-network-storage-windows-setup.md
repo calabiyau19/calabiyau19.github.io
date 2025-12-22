@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 draft: false
 title: "Windows Access to Samba Network Storage"
 date: 2025-12-22
