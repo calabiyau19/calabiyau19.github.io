@@ -9,7 +9,7 @@ description: "This guide documents how to install and setup MeTube after fully e
 
 ## MeTube Installation for YouTube Video Downloads
 
-This guide documents the installation and configuration of MeTube as a web-based YouTube downloader on VM 1106 (samba-storage-vm). MeTube provides a simple web interface for yt-dlp, allowing easy video downloads from any device on the network.
+This guide documents the installation and configuration of MeTube as a web-based YouTube downloader on VM (samba-storage-vm). MeTube provides a simple web interface for yt-dlp, allowing easy video downloads from any device on the network.
 
 ### Background and Tool Evaluation
 
