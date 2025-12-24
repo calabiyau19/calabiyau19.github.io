@@ -18,7 +18,7 @@ Complete guide for installing Ghostfolio using Docker on Ubuntu 24.04, setting u
 2. [Setting Up Paper Trading Portfolio](#setting-up-paper-trading-portfolio)
 3. [Setting Up Real Investment Tracking](#setting-up-real-investment-tracking)
 4. [Adding Cryptocurrency Holdings](#adding-cryptocurrency-holdings)
-5. [Migrating to Latest Version](#migrating-to-latest-version)
+5. [Migrating to The Latest Version](#migrating-to-latest-version)
 6. [Troubleshooting](#troubleshooting)
 7. [Maintenance and Updates](#maintenance-and-updates)
 
@@ -304,7 +304,7 @@ For holdings you already own (not new purchases):
    - **Type:** BUY
    - **Date:** Your original purchase date (for accurate cost basis)
    - **Quantity:** Shares you currently own
-   - **Unit Price:** Your original purchase price per share
+   - **Unit Price:** Your original purchase price per-share
    - **Fee:** 0 (already paid in the past)
    - **❌ UNCHECK "Update Cash Balance"** ← Don't deduct cash for existing holdings
 5. Click **Save**
@@ -387,21 +387,21 @@ Ghostfolio supports major cryptocurrencies via Yahoo Finance:
 
 ---
 
-## Migrating to Latest Version
+## Migrating to The Latest Version
 
-Upgrade from pinned version (2.109.0) to latest version with proper configuration.
+Upgrade from pinned version (2.109.0) to the latest version with proper configuration.
 
 ### Why Migrate?
 
 **Benefits:**
 - Automatic updates using `latest` tag
-- Newest features and bug fixes
+- The Newest features and bug fixes
 - Cleaner configuration with hex passwords
 
 **When to Migrate:**
 - After you're comfortable with Ghostfolio (1-2 weeks)
 - When you want automatic updates
-- If you need a new feature from latest version
+- If you need a new feature from the latest version
 
 ### What Gets Preserved
 
@@ -614,7 +614,7 @@ chmod +x migrate-ghostfolio.sh
 
 The script will:
 1. Generate new hex passwords
-2. Backup your current configuration
+2. Back up your current configuration
 3. Create new docker-compose.yml with `latest` tag
 4. Stop old containers
 5. Start new containers
@@ -728,7 +728,7 @@ Manual price update (as admin):
 2. Navigate to **Market Data**
 3. Click **"Gather All Data"**
 
-### Updating to Latest Version
+### Updating to The Latest Version
 
 After migrating to `latest` tag:
 
