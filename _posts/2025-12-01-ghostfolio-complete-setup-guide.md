@@ -18,7 +18,7 @@ Complete guide for installing Ghostfolio using Docker on Ubuntu 24.04, setting u
 2. [Setting Up Paper Trading Portfolio](#setting-up-paper-trading-portfolio)
 3. [Setting Up Real Investment Tracking](#setting-up-real-investment-tracking)
 4. [Adding Cryptocurrency Holdings](#adding-cryptocurrency-holdings)
-5. [Migrating to The Latest Version](#migrating-to-latest-version)
+5. [Migrating to The Latest Version](#migrating-to-the-latest-version)
 6. [Troubleshooting](#troubleshooting)
 7. [Maintenance and Updates](#maintenance-and-updates)
 
