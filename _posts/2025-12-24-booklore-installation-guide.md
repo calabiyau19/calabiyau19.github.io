@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "BookLore Installation on Ubuntu VM"
-date: 2025-12-24
-categories: [docker, ebooks, self-hosted]
-tags: [booklore, calibre-web]
----
+draft: false
+title: "BookLore Installation Guide"
+date: 2025-12-23
+description: "This guide documents how to install and set up BookLore, after using the more widely known Calibre-web for almost a year.  There was nothing wrong with Calibre-web, other than the setup was wonky with having to install Calibre first to create the database, then moving the whole thing to a server, etc.  BookLore may not be as feature-rich as Calibre-web, but I may never know since I just want to be able to stream my books to my phone or iPad wherever I am over tailscale.  Simple usage"
 
+---
 # BookLore Installation Guide
 
 **Date:** December 24, 2024  
