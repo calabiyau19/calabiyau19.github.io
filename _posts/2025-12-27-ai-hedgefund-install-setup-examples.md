@@ -6,6 +6,9 @@ date: 2025-12-27
 description: "This guide documents how to install and set up AI HedgeFund from GitHub and requires an API key that must be purchased for a small amount.  Since we were using Claude, we bought our API key from Anthropic. AI Hedgefund takes stock symbols input and then allows you to pick from one or more or all of 18 investors to analyze your stock picks and recommend buy, sell, short, or hold strategies."
 
 ---
+NOTE: The cost analysis were done by Claude, and they do not line up with reality.  I ran three tests and spent about $.30 of my initial $5.00 API key. BL - this costs some money to run so take an extra few minutes to make sure your ai-hedgefund "run" is set up correctly before you hit the final enter key. 
+
+NOTE: When you run the code in the terminal, you will get to pick your investors (1-18) and which LLM to use, so you have several opportunities to check your work before you get charged. 
 
 ## AI Hedge Fund Installation and Setup Guide
 
