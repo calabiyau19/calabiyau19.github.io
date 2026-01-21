@@ -6,6 +6,7 @@ date: 2026-01-21
 description: "There is an older, shorter version of this process on Pontifex.site but the process keeps getting refined as I acquire more information about best practices,and improved documentation methods, and this post documents the most up to date version of that process."
 ---
 
+> **Note:** If you have multiple Docker Compose applications running in a single VM, it is recommended that you use DockPeek for easier management and updates. The installation and usage guide can be found here: [How to install DockPeek on an Ubuntu VM with many Docker containers running](/posts/dockpeek-installation-guide/)
 
 ## Generic Docker Compose Service Update Procedure
 
