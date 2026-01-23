@@ -1,13 +1,10 @@
 ---
 layout: post
 draft: false
-title: "Backing up docker-comose.yml files from applications running on proxmox servers to local git repo"
+title: "Backing up docker-compose.yml files from applications running on proxmox servers to local git repo"
 date: 2026-01-23
 description: "This post documents the few steps I must follow each month when I do a backup of my docker-compose.yml files across my many applications running in VMs on Proxmox hypervisors. I just back them up to my local laptop and then I push them to a local Git repo that runs on its own VM"
 ---
-
-
-
 
 ## Docker Compose Backup Workflow
 
