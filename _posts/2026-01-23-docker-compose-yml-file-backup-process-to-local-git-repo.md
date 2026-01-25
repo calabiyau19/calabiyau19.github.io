@@ -139,6 +139,159 @@ The script backs up compose files from these VMs:
 | 192.168.1.167 | samba-storage-vm | SMB storage |
 | 192.168.1.116 | ai-hedgefund-vm | AI projects |
 
+### The Sync Script
+
+Complete source code for `~/Scripts/sync-docker-compose-repo.sh`:
+```sh
+#!/bin/bash
+set -eo pipefail
+user="mark"
+today=$(date +%F)
+dest_base="$HOME/compose-repo/$today"
+log_file="$HOME/compose-repo/compose-sync.log"
+
+#!/bin/bash
+set -eo pipefail
+
+user="mark"
+today=$(date +%F)
+dest_base="$HOME/compose-repo/$today"
+log_file="$HOME/compose-repo/compose-sync.log"
+
+mkdir -p "$dest_base"
+echo "🕒 Starting sync at $(date)" | tee "$log_file"
+echo "📂 Destination base: $dest_base" | tee -a "$log_file"
+echo "📝 Log file: $log_file" | tee -a "$log_file"
+
+# IP-to-name mapping
+declare -A host_map=(
+  ["192.168.1.64"]="jellyfin-vm"
+  ["192.168.1.65"]="mealie-vm"
+  ["192.168.1.72"]="ubuntu-web-vm"
+  ["192.168.1.74"]="proxy-vm"
+  ["192.168.1.98"]="reactive-resume-vm"
+  ["192.168.1.108"]="docker-vm"
+  ["192.168.1.110"]="freshrss-vm"
+  ["192.168.1.124"]="excalidraw-vm"
+  ["192.168.1.132"]="paperless-vm"
+  ["192.168.1.141"]="immich-vm"
+  ["192.168.1.144"]="testing-ubuntu-serv-vm"
+  ["192.168.1.152"]="navidrome-vm"
+  ["192.168.1.155"]="ghostfolio-vm"
+  ["192.168.1.166"]="git-repo-local-vm"
+  ["192.168.1.176"]="librenms-vm"
+  ["192.168.1.167"]="samba-storage-vm"
+  ["192.168.1.116"]="ai-hedgefund-vm"
+)
+
+hosts=("${!host_map[@]}")
+
+for host in "${hosts[@]}"; do
+  name="${host_map[$host]}"
+  echo "🔍 Scanning $host ($name)..." | tee -a "$log_file"
+
+  if [[ "$host" == "192.168.1.64" ]]; then
+    # Special Jellyfin backup
+    jellyfin_dir="$dest_base/$name/jellyfin"
+    mkdir -p "$jellyfin_dir"
+
+    echo "📦 Backing up /etc/jellyfin..." | tee -a "$log_file"
+    timeout 30 ssh -o ConnectTimeout=5 "$user@$host" "tar czf - /etc/jellyfin" \
+      | tar xzf - -C "$jellyfin_dir" 2>>"$log_file" && echo "✅ /etc/jellyfin backed up" | tee -a "$log_file"
+
+    for sub in metadata plugins data; do
+      echo "📦 Backing up /var/lib/jellyfin/$sub..." | tee -a "$log_file"
+      if timeout 30 ssh -o ConnectTimeout=5 "$user@$host" "tar czf - /var/lib/jellyfin/$sub" \
+        | tar xzf - -C "$jellyfin_dir" 2>>"$log_file"; then
+        echo "✅ $sub backup complete" | tee -a "$log_file"
+      else
+        echo "⚠️ Skipped $sub — directory may not exist or was empty" | tee -a "$log_file"
+      fi
+    done
+
+    echo "➡️ Jellyfin backup complete for $host." | tee -a "$log_file"
+    continue
+  fi
+
+  # Normal Compose file search
+  if [[ "$host" == "192.168.1.108" ]]; then
+    # Limit .108 to only ~/docker
+    mapfile -t paths < <(ssh -o ConnectTimeout=5 "$user@$host" \
+      "find /home/$user/docker -type f \\( -name 'docker-compose*.yml' -o -name 'compose.yml' -o -name 'docker-compose.override.yml' \\) 2>/dev/null")
+  else
+    mapfile -t paths < <(ssh -o ConnectTimeout=5 "$user@$host" \
+      "find /opt /srv /home /docker /data -type f \\( -name 'docker-compose*.yml' -o -name 'compose.yml' -o -name 'docker-compose.override.yml' \\) 2>/dev/null" \
+      | grep -Ev '/\.[^/]+/')
+  fi
+  # ➕ Special-case: exclude Immich e2e test Compose file
+  if [[ "$host" == "192.168.1.141" ]]; then
+     paths=( "${paths[@]/\/home\/mark\/immich\/e2e\/docker-compose.yml}" )
+  fi
+
+  # 💡 Manually include .cargo/sqlx Compose file for .74
+  if [[ "$host" == "192.168.1.74" ]]; then
+    special_path="/home/$user/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-0.8.6/tests/docker-compose.yml"
+    echo "📁 Manually including special case Compose file from proxy-vm (.cargo)" | tee -a "$log_file"
+    paths+=("$special_path")
+  fi
+
+  if [ ${#paths[@]} -eq 0 ]; then
+    echo "⚠️ WARNING: No Compose files found on $name ($host). Investigate if this is expected." | tee -a "$log_file"
+    continue
+  fi
+
+  for path in "${paths[@]}"; do
+    app="$(basename "$(dirname "$path")")"
+    target_dir="$dest_base/$name/$app"
+    mkdir -p "$target_dir"
+    file_name=$(basename "$path")
+
+    if scp -o ConnectTimeout=5 "$user@$host:$path" "$target_dir/$file_name" &>>"$log_file"; then
+      echo "✅ $file_name copied from $host → $target_dir" | tee -a "$log_file"
+
+      # Try to grab .env files from the same directory
+
+      env_dir="$(dirname "$path")"
+      mapfile -t env_files < <(ssh -o ConnectTimeout=5 "$user@$host" \
+        "find '$env_dir' -maxdepth 1 -type f -name '*.env' 2>/dev/null")
+
+      for env_file in "${env_files[@]}"; do
+        env_base=$(basename "$env_file")
+        if scp -o ConnectTimeout=5 "$user@$host:$env_file" "$target_dir/$env_base" &>>"$log_file"; then
+          echo "✅ $env_base copied" | tee -a "$log_file"
+        fi
+      done
+    else
+      echo "❌ Failed to copy $file_name from $host" | tee -a "$log_file"
+    fi
+  done
+
+  echo "➡️ $name backup complete." | tee -a "$log_file"
+done
+
+echo "✅ Sync complete — exit code $?" | tee -a "$log_file"
+echo "🕒 Finished at $(date)" | tee -a "$log_file"
+
+
+# Auto-commit and push to git
+
+echo "📝 Committing changes to git..." | tee -a "$log_file"
+cd "$HOME/compose-repo"
+git add .
+git commit -m "Snapshot $today: Automated sync from all VMs" | tee -a "$log_file"
+
+echo "⬆️ Pushing to remote backup server..." | tee -a "$log_file"
+git push | tee -a "$log_file"
+
+echo "🔄 Updating viewable copy on backup server..." | tee -a "$log_file"
+ssh mark@192.168.1.166 "cd ~/compose-repo-view && git pull" | tee -a "$log_file"
+
+echo "✅ Full backup workflow complete!" | tee -a "$log_file"
+
+```
+
+
+
 ### Troubleshooting
 
 **If git status shows uncommitted changes:**
