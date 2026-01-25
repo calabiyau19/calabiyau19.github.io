@@ -3,7 +3,7 @@ layout: post
 draft: false
 title: "Cloning Ubuntu 24.04 VMs on Proxmox Without Conflicts"
 date: 2026-01-25
-description: "This post documents the step by step process to create a new Ubuntu 24.04 VM on my Proxmox hypervisor from an existing Ubuntu 24.04 VM that is fully up to date and contains extras like Atuin, Fish, frequently run scripts, Docker, etc. This is a little tricky because the existing VM is NOT a Proxmox template therefor once a copy is created (on the same Proxmox server) there are several imporant things that must be done to make it a fully usable VM ready for a new application to be instaleld into."
+description: "This post documents the step by step process to create a new Ubuntu 24.04 VM on my Proxmox hypervisor from an existing Ubuntu 24.04 VM that is fully up to date and contains extras like Atuin, Fish, frequently run scripts, Docker, etc. This is a little tricky because the existing VM is NOT a Proxmox template therefor once a copy is created (on the same Proxmox server) there are several imporant things that must be done to make it a fully usable VM ready for a new application to be installed into."
 ---
 
 ## Overview
