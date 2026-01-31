@@ -17,12 +17,11 @@ description: "Over the past several months, I have accumulated many PDFs of prac
 ## Table of Contents
 1. [System Overview](#system-overview)
 2. [Why Syncthing vs Rsync](#why-syncthing-vs-rsync)
-3. [Architecture](#architecture)
-4. [Current Setup](#current-setup)
-5. [Vault Structure](#vault-structure)
-6. [Templates](#templates)
-7. [Next Steps](#next-steps)
-8. [Troubleshooting](#troubleshooting)
+3. [Current Setup](#current-setup)
+4. [Vault Structure](#vault-structure)
+5. [Templates](#templates)
+6. [Next Steps](#next-steps)
+7. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -55,7 +54,7 @@ Rsync cannot do this - it's unidirectional and requires manual execution. Syncth
 
 ---
 
-## Architecture
+## Current Setup
 
 ### Network Configuration
 ```
