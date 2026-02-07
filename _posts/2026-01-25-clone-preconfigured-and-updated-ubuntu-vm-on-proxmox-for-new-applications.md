@@ -91,7 +91,9 @@ qm status 101
 
 ## Step 3: Start VMs in Correct Order
 
-**CRITICAL:** After cloning, you must start the VMs in the correct order to prevent IP address conflicts.
+**CRITICAL:** After cloning, you must start the VMs in the correct order to prevent IP address conflicts.  
+
+**NOTE:** Any VMs that are shutdown should be started before bringing the new VM online or else these VMs might lose their existing IP address if they are not set with static addresses and use your DHCP server instead. Just saves time later tidying things up if IP addresses do "jump". 
 
 ### 3.1 Start the Original/Golden Image VM First
 
