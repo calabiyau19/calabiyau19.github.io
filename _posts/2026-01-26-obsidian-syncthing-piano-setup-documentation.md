@@ -14,6 +14,9 @@ description: "Over the past several months, I have accumulated many PDFs of prac
 
 ---
 
+![My Obsidian Main Piano Vault Page](/assets/img/obsidian-main-page.png)
+
+
 ## Table of Contents
 1. [System Overview](#system-overview)
 2. [Why Syncthing vs Rsync](#why-syncthing-vs-rsync)
@@ -22,6 +25,7 @@ description: "Over the past several months, I have accumulated many PDFs of prac
 5. [Templates](#templates)
 6. [Next Steps](#next-steps)
 7. [Troubleshooting](#troubleshooting)
+
 
 ---
 
