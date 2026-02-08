@@ -14,6 +14,8 @@ description: "Sparky Fitness is supposed to work very similarly to My Fitness Pa
 **VM:** sparky-fitness-vm (192.168.1.102)  
 **Application:** SparkyFitness - Self-hosted fitness tracking alternative to MyFitnessPal
 
+![SparkyFitness Dashboard](/assets/img/sparky-fitness-main-dashboard.png)
+
 ---
 
 ## Table of Contents
