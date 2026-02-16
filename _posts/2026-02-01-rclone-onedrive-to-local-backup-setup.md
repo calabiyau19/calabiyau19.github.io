@@ -3,7 +3,7 @@ layout: post
 draft: false
 title: "Using Rclone to pull down OneDrive contents to local Linux machine."
 date: 2026-02-01
-description: “I recently realized that I did not have a reliable, easy, and secure way to copy my OneDrive contents to my local machine.  I decided to set up Rclone for this job after reviewing options with Claude. This post shows how I did that, but be mindful that this is not a ‘generic’ setup as it is specific to my current workflows.”
+description: I recently realized that I did not have a reliable, easy, and secure way to copy my OneDrive contents to my local machine.  I decided to set up Rclone for this job after reviewing options with Claude. This post shows how I did that, but be mindful that this is not a ‘generic’ setup as it is specific to my current workflows.
 ---
 ## POST INSTALLATION AND ONGOING PROCEDURE UPDATE: 
 
