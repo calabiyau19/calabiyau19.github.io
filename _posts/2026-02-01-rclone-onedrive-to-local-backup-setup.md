@@ -5,6 +5,17 @@ title: "Using Rclone to pull down OneDrive contents to local Linux machine."
 date: 2026-02-01
 description: “I recently realized that I did not have a reliable, easy, and secure way to copy my OneDrive contents to my local machine.  I decided to set up Rclone for this job after reviewing options with Claude. This post shows how I did that, but be mindful that this is not a ‘generic’ setup as it is specific to my current workflows.”
 ---
+## POST INSTALLATION AND ONGOING PROCEDURE UPDATE: 
+
+**After you do this initially, what you want to do is run Rclone in the dry run mode to see if there's anything that needs to be updated, and then you just run the same command without the dry run flag.**
+
+```sh
+rclone copy onedrive:/ /media/mark/Ext_T7_lpthp/OneDrive --dry-run -P --update --exclude "Personal Vault/**"
+```
+After reviewing that output, run:
+```sh
+rclone copy onedrive:/ /media/mark/Ext_T7_lpthp/OneDrive --update --exclude "Personal Vault/**"
+```
 
 
 # Rclone Setup for OneDrive on Linux
