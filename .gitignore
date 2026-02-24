@@ -29,3 +29,4 @@ assets/js/dist
 #Posts locally published but not pushed to GitHub
 _posts/2026-02-07-adding-a-new-service-to-existing-reverse-proxy-caddy-cloudflare-tunnel.md
 _posts/2026-02-09-automating-ubuntu-server-updates-with-scripts.md
+_posts/2026-02-24-tailscale-troubleshooting.md
