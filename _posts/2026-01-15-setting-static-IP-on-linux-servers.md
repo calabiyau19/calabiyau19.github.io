@@ -201,7 +201,7 @@ ip addr show | grep "inet "
 
 ### Configuration Fields Explained
 
-- **dhcp4: false** — Disables DHCP so the static address is used instead
+- **dhcp4: false** — Disables DHCP, so the static address is used instead
 - **addresses** — Your static IP with subnet mask (`/24` = `255.255.255.0`)
 - **routes / via** — Your router's gateway IP address
 - **nameservers** — DNS servers used for name resolution
