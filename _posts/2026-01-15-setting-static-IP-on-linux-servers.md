@@ -3,147 +3,205 @@ layout: post
 draft: false
 title: "How to set a static IP address on a linux server or desktop"
 date: 2026-01-15
-description: "This short tutorial shows how to set a static IP address for one of your Ubuntu or Debian based servers using the command line or Linux or similar Linux desktop environments like Mint through the GUI."
+description: "This tutorial shows how to set a static IP address on Ubuntu 24.04 servers using netplan, and on Linux Mint desktops using the NetworkManager GUI or command line."
 ---
 
-## Setting Static IP on Linux Servers (Proxmox/Ubuntu)
+## Setting a Static IP on Ubuntu 24.04 Servers and Linux Mint Desktops
 
 ### Overview
-This guide shows how to configure a static IP address on a Linux server that is already using the IP you want to keep.
 
-**CRITICAL WARNING FOR PROXMOX**: Do NOT restart networking service while VMs are running. Changes require a full server reboot.
+This guide covers setting a static IP address on Ubuntu 24.04 servers (which use **netplan**) and on Linux Mint or Ubuntu desktop systems (which use **NetworkManager**). The `/etc/network/interfaces` method used in older Ubuntu releases does not apply to Ubuntu 24.04.
+
+---
+
+## For Ubuntu 24.04 Servers (Netplan)
+
+This applies to standalone Ubuntu VMs and servers. Proxmox hosts use a different method and are not covered here.
 
 ### Prerequisites
-- Root/sudo access to the server
-- Current IP address you want to make static
-- Gateway address (usually 192.168.1.254)
-- DNS servers (recommended: 1.1.1.1 and 8.8.8.8)
-- **For Proxmox**: Schedule maintenance window for server reboot
+
+- `sudo` access on the server
+- The static IP address you want to assign
+- SSH access or Proxmox console access
+
+---
+
+### Steps
+
+#### 1. Find Your Default Gateway
+
+Before editing anything, confirm your current gateway address:
+
+```sh
+ip route show
+```
+
+Look for the line beginning with `default via` — the IP address that follows is your gateway. Note it down, you will need it shortly.
+
+#### 2. Find Your Network Interface Name
+
+```sh
+ip link show
+```
+
+Look for your active interface — commonly `ens18` on Proxmox VMs. Note the name.
+
+#### 3. View the Current Netplan Configuration
+
+```sh
+sudo cat /etc/netplan/50-cloud-init.yaml
+```
+
+You should see something like:
+
+```yaml
+network:
+  version: 2
+  ethernets:
+    ens18:
+      dhcp4: true
+```
+
+This confirms the interface name and that DHCP is currently active.
+
+#### 4. Edit the Netplan Configuration
+
+```sh
+sudo nano /etc/netplan/50-cloud-init.yaml
+```
+
+Replace the entire contents with the following, substituting your values:
+
+```yaml
+network:
+  version: 2
+  ethernets:
+    ens18:
+      dhcp4: false
+      addresses:
+        - 192.168.1.XXX/24
+      routes:
+        - to: default
+          via: 192.168.1.YYY
+      nameservers:
+        addresses:
+          - 1.1.1.1
+          - 8.8.8.8
+```
+
+Replace:
+- `ens18` with your interface name from Step 2
+- `192.168.1.XXX` with your desired static IP
+- `192.168.1.YYY` with your gateway address from Step 1
+
+Save and exit: `Ctrl+X`, then `Y`, then `Enter`.
+
+#### 5. Apply the Configuration
+
+```sh
+sudo netplan apply
+```
+
+Your SSH session will drop immediately when this runs — that is expected behavior, not an error. The IP address has changed.
+
+#### 6. Reconnect at the New IP
+
+Open a new terminal and SSH to the new static IP:
+
+```sh
+ssh mark@192.168.1.XXX
+```
+
+#### 7. Verify the New IP is Active
+
+```sh
+ip addr show
+```
+
+Confirm your new static IP appears next to your interface name with `scope global`.
+
+#### 8. Verify SSH Service is Running
+
+In some cases, particularly on template VMs, the SSH service may be inactive after the IP change. Check its status:
+
+```sh
+sudo systemctl status ssh
+```
+
+If it shows inactive or disabled, enable and start it:
+
+```sh
+sudo systemctl enable ssh --now
+```
+
+Then reboot the VM to confirm SSH starts automatically on future boots:
+
+```sh
+sudo reboot
+```
+
+Reconnect after reboot and verify SSH is working at the new IP.
+
+#### 9. Test Connectivity
+
+```sh
+ping -c 3 1.1.1.1
+```
+
+If ping succeeds, your static IP is configured correctly.
 
 ---
 
 ## For Linux Mint / Ubuntu Desktop (NetworkManager)
 
-**RECOMMENDED: Use the GUI method**
+### GUI Method (Recommended)
 
-### GUI Method (Easiest)
-
-1. Click the network icon in your system tray (bottom right)
-2. Click "Network Settings" or "Edit Connections"
-3. Find your active connection (e.g., "Auto ORBI08")
-4. Click the gear icon or "Edit"
-5. Go to the "IPv4 Settings" tab
-6. Change method from "Automatic (DHCP)" to "Manual"
-7. Click "Add" and enter:
-   - **Address**: `192.168.1.100` (your desired IP)
-   - **Netmask**: `255.255.255.0` (or enter `24`)
-   - **Gateway**: `192.168.1.254`
-8. In **DNS servers** field: `1.1.1.1, 8.8.8.8`
-9. Click **"Save"**
-10. Disconnect and reconnect to the network
+1. Click the network icon in your system tray
+2. Click **Network Settings** or **Edit Connections**
+3. Find your active connection and click the gear icon or **Edit**
+4. Go to the **IPv4 Settings** tab
+5. Change method from **Automatic (DHCP)** to **Manual**
+6. Click **Add** and enter:
+   - **Address**: your desired static IP
+   - **Netmask**: `255.255.255.0` (or `24`)
+   - **Gateway**: your gateway address (run `ip route show` to confirm)
+7. In the **DNS servers** field enter: `1.1.1.1, 8.8.8.8`
+8. Click **Save**
+9. Disconnect and reconnect to the network
 
 ### Command Line Method (Alternative)
 
-If you must use command line on NetworkManager systems:
+First, find your connection UUID:
+
 ```sh
-# List connections to find your UUID
 nmcli connection show
+```
 
-# Modify connection (use your actual UUID)
-nmcli connection modify <UUID> ipv4.method manual ipv4.addresses 192.168.1.100/24 ipv4.gateway 192.168.1.254 ipv4.dns "1.1.1.1 8.8.8.8"
+Then apply the static IP settings using your UUID:
 
-# Apply changes
+```sh
+nmcli connection modify <UUID> ipv4.method manual ipv4.addresses 192.168.1.XXX/24 ipv4.gateway 192.168.1.YYY ipv4.dns "1.1.1.1 8.8.8.8"
+```
+
+Bring the connection down and back up to apply:
+
+```sh
 nmcli connection down <UUID> && nmcli connection up <UUID>
+```
 
-# Verify
+Verify:
+
+```sh
 ip addr show | grep "inet "
 ```
 
-**Note**: NetworkManager can have duplicate connection names. If you see warnings about duplicate names, use the connection's UUID instead of the name, or use the GUI method.
+**Note**: If you see warnings about duplicate connection names, use the UUID instead of the connection name in all commands.
 
 ---
 
-## For Proxmox / Ubuntu Server
+### Configuration Fields Explained
 
-### Steps
-
-#### 1. Check Current Configuration
-```sh
-cat /etc/network/interfaces
-```
-
-Look for your network bridge (usually `vmbr0` on Proxmox) or main interface.
-
-#### 2. Verify if Already Static
-Look for the line starting with `iface`:
-- `iface vmbr0 inet static` = Already static (just add DNS if missing)
-- `iface vmbr0 inet dhcp` = Using DHCP (needs conversion to static)
-
-#### 3. Edit Network Configuration
-```sh
-nano /etc/network/interfaces
-```
-
-#### 4. Configure Static IP
-Find or create the interface section. Example for vmbr0:
-```
-auto vmbr0
-iface vmbr0 inet static
-        address 192.168.1.XXX/24
-        gateway 192.168.1.254
-        dns-nameservers 1.1.1.1 8.8.8.8
-        dns-search tailcf482c.ts.net
-        bridge-ports enp1s0
-        bridge-stp off
-        bridge-fd 0
-```
-
-Replace:
-- `192.168.1.XXX` with your desired IP
-- `enp1s0` with your physical interface name (check with `ip link show`)
-- Remove `bridge-*` lines if not using a bridge
-
-#### 5. Save and Exit
-- Press `Ctrl+X`
-- Press `Y` to confirm
-- Press `Enter` to save
-
-#### 6. Apply Configuration
-
-**For Proxmox servers with running VMs:**
-```sh
-reboot
-```
-Changes will NOT take effect until server is rebooted. Do NOT use `systemctl restart networking` as this will disconnect all VM networks and require a reboot anyway to restore VM connectivity.
-
-**For standalone Ubuntu servers (no VMs):**
-```sh
-systemctl restart networking
-```
-
-#### 7. Verify Configuration
-After reboot, test connectivity:
-```sh
-ping -c 3 1.1.1.1
-```
-
-**For Proxmox**: Also verify VMs are reachable after reboot.
-
-If ping works, your static IP is configured correctly.
-
----
-
-### Network Configuration Fields Explained
-- **address**: Your static IP with subnet mask (/24 = 255.255.255.0)
-- **gateway**: Your router's IP address
-- **dns-nameservers**: DNS servers for name resolution
-- **dns-search**: Domain search suffix (if using Tailscale)
-- **bridge-ports**: Physical interface connected to the bridge (Proxmox only)
-
-### Notes
-- **CRITICAL**: On Proxmox, always reboot instead of restarting networking service
-- Restarting networking on Proxmox will disconnect all VM network interfaces
-- Schedule maintenance window for Proxmox hosts
-- Always verify network connectivity after changes
-- **For Linux Mint/Ubuntu Desktop**: GUI method is recommended over command line
-- For standalone Ubuntu servers without VMs, network restart is safe
+- **dhcp4: false** — Disables DHCP so the static address is used instead
+- **addresses** — Your static IP with subnet mask (`/24` = `255.255.255.0`)
+- **routes / via** — Your router's gateway IP address
+- **nameservers** — DNS servers used for name resolution
