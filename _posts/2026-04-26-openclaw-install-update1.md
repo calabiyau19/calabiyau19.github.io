@@ -2,7 +2,7 @@
 layout: post
 draft: false
 title: "Installation of OpenClaw app in Ubuntu VM."
-date: 2026-04-23
+date: 2026-04-26
 description: "This post documents the steps I went through to install OpenClaw in a new, empty, Ubuntu 24.04 VM on one of my Proxmox hypervisors." 
 ---
 
@@ -11,7 +11,6 @@ description: "This post documents the steps I went through to install OpenClaw i
 
 OpenClaw is an open-source AI agent that connects a large language model like Claude to messaging platforms, your filesystem, shell commands, and external APIs. Unlike a chatbot, it *acts* — running tasks autonomously while you go do something else. This guide documents installing OpenClaw 2026.4.21 on a dedicated Ubuntu 24.04 VM in Proxmox, connected to Anthropic's Claude API via Telegram.
 
-<!-- Hero image suggestion: The OpenClaw lobster ASCII art banner in a terminal,  -->
 ![Open Claw chat screen from the console](/assets/img/OpenClaw_hero1.png)
 
 ---
@@ -222,6 +221,30 @@ openclaw gateway status
 ```
 
 Look for `Runtime: running` and `Connectivity probe: ok`.
+
+---
+
+## ⚠️ Step 9a — Understand and Control the Heartbeat
+
+**Read this carefully before installing any skills.**
+
+OpenClaw has a heartbeat system that can run periodic agent turns automatically. Each heartbeat loads your entire workspace context — SOUL.md, USER.md, TOOLS.md, AGENTS.md, and any installed skills — and sends it to the Claude API. This costs real money every time it fires.
+
+**What we know from direct experience:** Installing the self-improving skill from ClawHub triggered aggressive heartbeat activity. The estimated cost was approximately $0.50 per hour — over $18 in 36 hours — running unattended. The heartbeat may not run at all out of the box, but certain skills enable or accelerate it automatically when installed.
+
+**The safe approach:** Explicitly set the heartbeat interval to zero immediately after setup, before installing any skills. This guarantees it cannot run without your knowledge regardless of what any skill does.
+
+```sh
+openclaw config set agents.defaults.heartbeat.every "0m"
+```
+
+Restart the gateway to apply:
+
+```sh
+openclaw gateway restart
+```
+
+Before installing any skill from ClawHub, ask: does this skill run on a schedule or only when I ask? If it runs on a schedule, understand the token cost before enabling it. Never install background or self-improving skills without first setting a spend limit in the Anthropic console.
 
 ---
 
