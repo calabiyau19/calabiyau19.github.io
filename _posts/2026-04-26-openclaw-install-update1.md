@@ -6,6 +6,7 @@ date: 2026-04-26
 description: "This post documents the steps I went through to install OpenClaw in a new, empty, Ubuntu 24.04 VM on one of my Proxmox hypervisors." 
 ---
 
+> **⚠️ IMPORTANT NOTE:** Follow the [official OpenClaw getting started guide](https://docs.openclaw.ai/start/getting-started) instead of this write-up. It is faster, is the approved installation method, and was not improvised by an AI even though the below process will get you there, eventually.
 
 ## Installing OpenClaw on a Proxmox VM
 
