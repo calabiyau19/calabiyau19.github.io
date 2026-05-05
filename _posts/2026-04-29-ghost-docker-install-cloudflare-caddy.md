@@ -18,6 +18,8 @@ This post documents the complete installation of Ghost CMS on a dedicated Ubuntu
 
 ---
 
+![Ghost running Source theme](/assets/img/ghost-install-hero1.png)
+
 ## Environment Overview
 
 **Homelab Infrastructure:**
