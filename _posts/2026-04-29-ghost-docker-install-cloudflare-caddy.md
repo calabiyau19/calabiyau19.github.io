@@ -3,7 +3,7 @@ layout: post
 draft: false
 Title: Ghost CMS Installation Using Docker Behind Cloudflare Tunnel and Caddy Reverse Proxy. 
 date: 2026-04-29
-description: "This post documents the steps to add Ghost CMS on a Proxmox hypervisors, in a Ubuntu 24.04 VM behind Cloudflare Tunnel and Caddy Reverse Proxy."
+description: "This post documents the steps to add Ghost CMS on a Proxmox hypervisor, in a Ubuntu 24.04 VM behind Cloudflare Tunnel and Caddy Reverse Proxy."
 
 ---
 
