@@ -441,13 +441,147 @@ rclone check /media/mark/Ext_T7_lpthp/OneDrive onedrive:/ --one-way
 - OneDrive-specific docs: https://rclone.org/onedrive/
 - rclone forum: https://forum.rclone.org/
 
+## Adding Google Drive
+
+Rclone supports Google Drive using the same `rclone config` process. The key differences from OneDrive setup are noted below.
+
+### Google Drive Configuration Steps
+
+```sh
+rclone config
+```
+
+Choose `n` for new remote, give it a name (e.g. `google-mark`), then select Google Drive from the numbered list.
+
+**Key differences from OneDrive setup:**
+
+- `client_id` and `client_secret` - leave both blank, press Enter
+- **Scope** - choose `1` (Full access all files) - do NOT leave blank
+- `service_account_file` - leave blank, press Enter
+- Advanced config - choose `n`
+- Auto config - choose `y` (opens browser for Google authentication)
+- Shared Drive (Team Drive) - choose `n` for personal Google Drive
+
+**Important note about Google Docs/Sheets/Slides:**
+
+Google's native formats don't exist as real files - rclone converts them on download:
+- Google Docs → `.docx`
+- Google Sheets → `.xlsx`
+- Google Slides → `.pptx`
+
+Regular files (PDFs, images, videos) download exactly as-is with no conversion.
+
+### Multiple Google Accounts
+
+If you have more than one Google account, run `rclone config` again and create a separate remote for each one with a different name (e.g. `google-mark`, `google-calabiyau19`). Give each account its own destination folder on your external drive to avoid files from different accounts mixing together.
+
+### Google Drive Dry Run
+
+```sh
+rclone copy google-mark:/ /media/mark/Ext_T7_lpthp/GoogleDrive-mark --dry-run -P
+```
+
+### Google Drive Actual Copy
+
+```sh
+rclone copy google-mark:/ /media/mark/Ext_T7_lpthp/GoogleDrive-mark -P
+```
+
+No Personal Vault exclusion needed for Google Drive.
+
+## Adding Dropbox
+
+Same `rclone config` process - choose Dropbox from the numbered list, leave client ID and secret blank, use auto config to authenticate in browser.
+
+### Dropbox Dry Run
+
+```sh
+rclone copy dropbox-mark:/ /media/mark/Ext_T7_lpthp/Dropbox --dry-run -P
+```
+
+### Dropbox Actual Copy
+
+```sh
+rclone copy dropbox-mark:/ /media/mark/Ext_T7_lpthp/Dropbox -P
+```
+
+## Syncing All Cloud Services with One Script
+
+Once all remotes are configured, a single script handles all four services sequentially. The script lives at `~/Scripts/sync-from-onedrive-google-dropbox.sh`.
+
+The script checks that the external drive is mounted before doing anything, then runs each service in order:
+
+```sh
+#!/bin/bash
+
+# Sync all cloud storage to external drive
+# External drive must be mounted at /media/mark/Ext_T7_lpthp before running
+
+EXTERNAL="/media/mark/Ext_T7_lpthp"
+
+# Check external drive is mounted
+if [ ! -d "$EXTERNAL" ]; then
+    echo "ERROR: External drive not mounted at $EXTERNAL - aborting"
+    exit 1
+fi
+
+echo "===== Starting cloud sync $(date) ====="
+
+echo ""
+echo "--- Syncing OneDrive ---"
+rclone copy onedrive:/ $EXTERNAL/OneDrive -P --exclude "Personal Vault/**"
+
+echo ""
+echo "--- Syncing Google Drive (mark) ---"
+rclone copy google-mark:/ $EXTERNAL/GoogleDrive-mark -P
+
+echo ""
+echo "--- Syncing Google Drive (calabiyau19) ---"
+rclone copy google-calabiyau19:/ $EXTERNAL/GoogleDrive-calabiyau19 -P
+
+echo ""
+echo "--- Syncing Dropbox ---"
+rclone copy dropbox-mark:/ $EXTERNAL/Dropbox -P
+
+echo ""
+echo "===== Cloud sync complete $(date) ====="
+```
+
+Make it executable:
+
+```sh
+chmod +x ~/Scripts/sync-from-onedrive-google-dropbox.sh
+```
+
+Run it:
+
+```sh
+~/Scripts/sync-from-onedrive-google-dropbox.sh
+```
+
+## Current Remote Configuration
+
+```
+Name                 Type
+====                 ====
+dropbox-mark         dropbox
+google-calabiyau19   drive
+google-mark          drive
+onedrive             onedrive
+```
+
+Local folders on external drive:
+- `/media/mark/Ext_T7_lpthp/OneDrive`
+- `/media/mark/Ext_T7_lpthp/GoogleDrive-mark`
+- `/media/mark/Ext_T7_lpthp/GoogleDrive-calabiyau19`
+- `/media/mark/Ext_T7_lpthp/Dropbox`
+
 ## Summary
 
-- Rclone is installed and configured to access your OneDrive
-- Use `rclone copy` for safe one-way transfers
+- Rclone is installed and configured for OneDrive, two Google Drive accounts, and Dropbox
+- Use `rclone copy` for safe one-way transfers - never deletes files
 - Use `rclone sync` with caution (can delete files)
 - Rclone does NOT auto-sync - you must run it manually
-- Your initial download to external drive is complete (125 files, ~150 MB)
-- Personal Vault cannot be accessed via rclone (expected limitation)
-
-For your use case (one-time bulk download), rclone is perfect. If you later need continuous sync like Dropbox, consider the abraunegg/onedrive client instead.
+- Personal Vault cannot be accessed via rclone - download manually from onedrive.live.com
+- Google Docs/Sheets/Slides are converted to .docx/.xlsx/.pptx on download
+- Run all four services at once with `~/Scripts/sync-from-onedrive-google-dropbox.sh`
