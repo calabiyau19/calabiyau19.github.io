@@ -3,8 +3,10 @@ layout: post
 title: "Whisper AI self hosted complete installation guide"
 draft: false
 date: 2025-11-25
+last_modified_at: 2026-06-13
 description: "Complete guide to download, set up, and run Whisper AI on a Linux Mint (Ubuntu) laptop. Have tried the tiny, base and small models, and they are close in speed to Whisper AI. The small model is a little slower in my testing but very accurate. Note: this setup also gives you the ability to explicitly set the number of processors to work on the translation part.  These instructions explicitly set it to 8 threads, which you can change to whatever you want."
 ---
+
 **NOTE: IF YOU JUST WANT TO INSTALL WHISPER LOCALLY AND HAVE IT WORK SIMILARLY TO WHISPER AI ONLINE, SKIP TO [Section 5](#section-5--whisper-ai-style-dictation-startstop-hotkeys).  SECTIONS 1-4 DOCUMENT THE PROCESS THAT I WENT THROUGH FROM KNOWING NOTHING ABOUT SELF HOSTING A WHISPER VERSION TO GETTING A FUNCTIONING VERSION RUNNING ON MY LAPTOP.**
 
 The benefits to using a locally hosted Whisper AI dictation model are that your data is locally hosted, and that it can also be used in every application that you would normally type in - something Whisper AI online cannot do. Things that do not work in Whisper AI, like Libra Office Writer or this program, VS Code, a simple text editor or a terminal, Whisper Local will allow you to dictate and transcribe to all those applications as well.
@@ -281,7 +283,7 @@ while true; do
   echo "Chunk #${i} - recording ${CHUNK_SECONDS} seconds... (speak now)"
   arecord -q -f cd -t wav -d "${CHUNK_SECONDS}" -r 16000 -c 1 "${WAV}"
 
-  echo "Transcribing chunk #${i} with Whisper..."
+  echo "Transcribing..."
   whisper-ctranslate2 \
     --model "${MODEL}" \
     --language en \
@@ -289,39 +291,30 @@ while true; do
     --output_dir "${OUT_DIR}" \
     "${WAV}"
 
-  if [ -f "${TXT}" ]; then
-    CHUNK_TEXT="$(cat "${TXT}")"
-    echo "${CHUNK_TEXT}" >> "${SESSION_TXT}"
-
-    # Copy entire running transcript to clipboard
-    xclip -selection clipboard < "${SESSION_TXT}"
-
+  if [ -f "$TXT" ]; then
+    cat "${TXT}" >> "${SESSION_TXT}"
+    echo " " >> "${SESSION_TXT}"
     echo
-    echo "Last chunk:"
-    echo "-----------"
-    echo "${CHUNK_TEXT}"
-    echo
-    echo "Running transcript (also copied to clipboard):"
-    echo "----------------------------------------------"
+    echo "--- Full transcript so far ---"
     cat "${SESSION_TXT}"
+    echo "--- end ---"
     echo
-    echo "(You can paste this into ChatGPT, Claude, Word, LibreOffice, Google Docs, etc.)"
-  else
-    echo "Warning: transcript file not found for chunk #${i} (${TXT})." >&2
+    xclip -selection clipboard < "${SESSION_TXT}"
+    echo "(Copied to clipboard.)"
   fi
 
   i=$((i + 1))
 done
  ```
 
-Save and exit:
+Then:
 
-* **Ctrl+O**, **Enter**
-* **Ctrl+X**
+* **Ctrl+O**, **Enter** to save
+* **Ctrl+X** to exit
 
 ---
 
-### 2.2 Make the script executable
+### 2.2 Make it executable
 
  ```sh
 chmod +x ~/Scripts/whisper_continuous.sh
@@ -329,136 +322,71 @@ chmod +x ~/Scripts/whisper_continuous.sh
 
 ---
 
-### 2.3 Usage examples
+### 2.3 Usage
 
-**Default continuous dictation (10s chunks, `tiny` model):**
-
- ```sh
-~/Scripts/whisper_continuous.sh
- ```
-
-* Records chunk #1 for 10 seconds, transcribes, prints:
-  * "Last chunk" (the latest 10 seconds)
-  * "Running transcript" (all chunks so far)
-* Copies the full running transcript to the clipboard.
-* Immediately starts chunk #2, then #3, etc.
-* Press **Ctrl+C** to stop.
-* Final transcript is saved as:
-
- ```sh
-/tmp/whisper_continuous/session_YYYYMMDD_HHMMSS.txt
- ```
-
-**Change chunk length (e.g., 15 seconds):**
-
- ```sh
-~/Scripts/whisper_continuous.sh 15
- ```
-
-**Use a different Whisper model (e.g., `base` instead of `tiny`):**
+Record 10-second chunks with the `base` model:
 
  ```sh
 ~/Scripts/whisper_continuous.sh 10 base
  ```
 
----
-
-## Section 3 — Whisper Dictation That Types Directly Into the Active Window
-
-This script allows Whisper to "type" the transcribed text into whatever window you have focused. Works with: ChatGPT, Claude, LibreOffice, Word, Google Docs, any browser field, any terminal, anything with a text cursor.
+This will loop indefinitely, recording + transcribing 10-second chunks and appending to a session file. Press **Ctrl+C** to stop.
 
 ---
 
-### 3.1 Install typing tool: xdotool
+## Section 3 – One-Shot Typing with Hotkey
 
- ```sh
-sudo apt install -y xdotool
- ```
+This is a short script that:
 
-(This will show "already the newest version" if previously installed.)
+* Records for 10 seconds
+* Transcribes (no display)
+* Types the result directly into your active window
+
+Bound to a global hotkey like **Ctrl+Alt+W**.
 
 ---
 
-### 3.2 Create the typing dictation script
+### 3.1 Create `whisper_type.sh`
 
-Open the script:
+Open a new script:
 
  ```sh
 nano ~/Scripts/whisper_type.sh
  ```
 
-Paste the following content:
+Paste this:
 
  ```sh
 #!/usr/bin/env bash
 set -e
 
-# Usage:
-#   ./whisper_type.sh              # 10s, tiny model
-#   ./whisper_type.sh 5            # 5s, tiny model
-#   ./whisper_type.sh 8 base       # 8s, base model
-#
-# IMPORTANT:
-#   - Click in the target window (ChatGPT, Claude, Word, LibreOffice, Google Docs, etc.)
-#   - Make sure the text cursor is where you want the text
-#   - Then run this script from a terminal
-#   - When recording finishes, the script will "type" the text into the active window
+AUDIO_FILE="/tmp/whisper_type.wav"
+TEXT_FILE="/tmp/whisper_type.txt"
 
-DURATION="${1:-10}"          # seconds to record
-MODEL="${2:-tiny}"           # whisper model (tiny, base, small, etc.)
+# Record 10 seconds from microphone
+arecord -q -f cd -t wav -d 10 -r 16000 -c 1 "$AUDIO_FILE"
 
-OUT_WAV="/tmp/whisper_type.wav"
-OUT_TXT="/tmp/whisper_type.txt"
-
-echo "Recording for ${DURATION} seconds... (speak now)"
-arecord -q -f cd -t wav -d "${DURATION}" -r 16000 -c 1 "${OUT_WAV}"
-
-echo "Transcribing with Whisper (${MODEL}, English)..."
+# Transcribe with tiny model
 whisper-ctranslate2 \
-  --model "${MODEL}" \
+  --model tiny \
   --language en \
   --output_format txt \
   --output_dir /tmp \
-  "${OUT_WAV}"
+  "$AUDIO_FILE" >/dev/null 2>&1
 
-if [ ! -f "${OUT_TXT}" ]; then
-  # Try to locate a matching txt file if the expected one isn't there
-  CANDIDATE="$(ls /tmp | grep -E '^whisper_type.*\.txt$' | head -n 1 2>/dev/null || true)"
-  if [ -n "${CANDIDATE}" ]; then
-    OUT_TXT="/tmp/${CANDIDATE}"
-  fi
-fi
-
-if [ -f "${OUT_TXT}" ]; then
-  TEXT="$(cat "${OUT_TXT}")"
-
-  echo
-  echo "Transcript:"
-  echo "-----------"
-  echo "${TEXT}"
-  echo
-  echo "Typing transcript into the active window using xdotool..."
-  echo "(Make sure your cursor is in the target text box.)"
-  echo
-
-  # Type the text into the currently active window
-  xdotool type --delay 0 "${TEXT}"
-
-  echo
-  echo "Done."
-else
-  echo "Error: transcript file not found (${OUT_TXT})." >&2
+# If transcription succeeded, type it
+if [ -f "$TEXT_FILE" ]; then
+  TRANSCRIPT="$(cat "$TEXT_FILE")"
+  xdotool type "$TRANSCRIPT"
+  rm -f "$AUDIO_FILE" "$TEXT_FILE"
 fi
  ```
 
-Save and exit:
-
-* **Ctrl+O**, **Enter**
-* **Ctrl+X**
+Save and exit.
 
 ---
 
-### 3.3 Make it executable
+### 3.2 Make it executable
 
  ```sh
 chmod +x ~/Scripts/whisper_type.sh
@@ -466,138 +394,107 @@ chmod +x ~/Scripts/whisper_type.sh
 
 ---
 
-### 3.4 Usage
+### 3.3 Bind to a hotkey
 
-1. Open any text box anywhere (ChatGPT, Claude, LibreOffice, Google Docs, etc.).
-2. Run the script from your terminal:
+In **Cinnamon** (default on Mint):
+
+1. Open **Settings** → **Keyboard** → **Shortcuts** → **Custom Shortcuts**
+2. Click **+** to add a new shortcut
+3. Name it: `Whisper Type`
+4. Command: `bash -lc ~/Scripts/whisper_type.sh`
+5. Bind it to: **Ctrl+Alt+W** (or any key combo you prefer)
+6. Click **Add**
+
+Now pressing **Ctrl+Alt+W** anywhere will:
+
+* Record 10 seconds of speech
+* Transcribe with the `tiny` model
+* Type the result into your active window (web form, text editor, terminal, etc.)
+
+---
+
+## Section 4 – Advanced: Microphone Debugging
+
+If Whisper doesn't record, the problem is usually the microphone or ALSA configuration.
+
+### 4.1 List your audio devices
 
  ```sh
-~/Scripts/whisper_type.sh 5
+arecord -l
  ```
 
-3. Immediately click into your target window and leave the text cursor there.
-4. Speak while it records.
-5. When recording completes, Whisper transcribes and `xdotool` types your words directly into the active window.
-
-**Test results:**
-
-* One 5-second recording
-* Whisper correctly transcribed
-* The script printed the text in your terminal
-* Then it successfully typed the same text into your target application
-
-This confirms Section 3 is complete.
-
----
-
-## Section 4 – Global Hotkey for Whisper Typing (Ctrl+Alt+W)
-
-This section wires your `whisper_type.sh` script to a global keyboard shortcut, so you can start a short dictation and have it typed into the active window with a single key combo.
-
----
-
-### 4.1 Ensure the script exists and is executable
-
-(Already done in Section 3, but for completeness.)
-
- ```sh
-nano ~/Scripts/whisper_type.sh
-chmod +x ~/Scripts/whisper_type.sh
- ```
-
-The `whisper_type.sh` script content is documented in Section 3.2 above.
-
----
-
-### 4.2 Open Keyboard Shortcuts
-
-From a terminal:
-
- ```sh
-cinnamon-settings keyboard
- ```
-
-Then:
-
-1. Go to the **Shortcuts** tab.
-2. In the left "Categories" pane, click **Custom Shortcuts**.
-
----
-
-### 4.3 Add the custom shortcut
-
-1. Click **Add custom shortcut**.
-2. In the dialog:
-   * **Name:**
+You'll see output like:
 
  ```text
-   Whisper Type
- ```
+**** PLAYBACK Devices ****
+card 0: PCH [HDA Intel PCH], device 0: ALC295 Analog [ALC295 Analog]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
 
-* **Command:**
+**** CAPTURE Devices ****
+card 0: PCH [HDA Intel PCH], device 0: ALC295 Analog [ALC295 Analog]
+```
+
+Your microphone is the **CAPTURE** device.
+
+### 4.2 Test recording (5 seconds)
 
  ```sh
-   bash -lc "~/Scripts/whisper_type.sh 10"
+arecord -f cd -t wav -d 5 -r 16000 -c 1 /tmp/test.wav
  ```
 
-3. Click **Add**.
-
-You will now see **Whisper Type** in the list, with **unassigned** as its keybinding.
-
----
-
-### 4.4 Assign Ctrl+Alt+W
-
-1. Click on the word **unassigned** next to **Whisper Type**.
-2. When it says **Pick an accelerator…**, press:
+You'll see:
 
  ```text
-   Ctrl + Alt + W
+Recording WAVE '/tmp/test.wav' : Signed 16 bit Little Endian, Rate 16000 Hz, Mono
+```
+
+Speak into your mic for 5 seconds. When done:
+
+ ```sh
+aplay /tmp/test.wav
  ```
 
-3. It should now display: **Ctrl+Alt+W**.
-
-This finishes the hotkey setup for the one-shot typing script.
+You should hear your recording played back.
 
 ---
 
-### 4.5 Using the hotkey
+## Section 5 – Whisper-AI-Style Dictation with Start/Stop Hotkeys
 
-1. Click into any text box (ChatGPT, Claude, LibreOffice, Google Docs, etc.) so the text cursor is where you want the dictation to appear.
-2. Press **Ctrl+Alt+W**.
-3. Speak for ~10 seconds (or whatever duration you configured).
-4. When the script finishes:
-   * Whisper transcribes your audio locally.
-   * `xdotool` types the text directly into the active window.
-5. The script exits automatically — no separate "stop" key is required for this short, one-shot mode.
+This is the "production" setup. Two hotkeys:
 
----
+* **Ctrl+Alt+Q** = START recording
+* **Ctrl+Alt+Z** = STOP, transcribe, and type into active window
 
-## Section 5 – Whisper-AI-Style Dictation (Start/Stop Hotkeys)
-
-##This section creates a true Whisper-AI-style dictation system with two separate hotkeys:##
-
-* **Ctrl+Alt+Q** = Start recording
-* **Ctrl+Alt+Z** = Stop recording and immediately transcribe
-
-Unlike the previous sections which used fixed-duration recording, this system lets you:
-
-* Record for as long as you need (up to 60 seconds max)
-* Stop whenever you're done speaking
-* Get instant transcription typed into your active window
-* Hear audio feedback (bell sounds) when starting and stopping
+No display, no dialogs. Works anywhere.
 
 ---
 
-### 5.1 Create the START script
+### 5.1 Prerequisites
 
-Open a new script in `nano`:
+Before starting, you need:
+
+* `xdotool` (to type into active windows)
+* `arecord` (already installed from Section 1)
+* `paplay` (for audio feedback)
+
+Install them:
+
+ ```sh
+sudo apt install -y xdotool pulseaudio-utils
+ ```
+
+---
+
+### 5.2 Create the start script
+
+Open a new script:
 
  ```sh
 nano ~/Scripts/start_whisper_simple.sh
  ```
 
-Paste this content:
+Paste this:
 
  ```sh
 #!/usr/bin/env bash
@@ -616,7 +513,7 @@ if [ -f "$PIDFILE" ] && ps -p "$(cat "$PIDFILE")" >/dev/null 2>&1; then
 fi
 
 # Play start sound (optional - comment out if you don't want it)
-paplay --volume=32768 /usr/share/sounds/freedesktop/stereo/bell.oga 2>/dev/null || true
+paplay --volume=34406 /usr/share/sounds/freedesktop/stereo/bell.oga 2>/dev/null || true
 
 # Start recording in background (max 60 seconds)
 # -f cd = CD quality
@@ -632,36 +529,19 @@ echo "$PID" > "$PIDFILE"
 echo "Recording started (PID: $PID)"
  ```
 
-Save and exit:
-
-* **Ctrl+O**, **Enter**
-* **Ctrl+X**
-
-Make it executable:
-
- ```sh
-chmod +x ~/Scripts/start_whisper_simple.sh
- ```
-
-**What this script does:**
-
-1. Checks if a recording is already in progress (prevents double-recording)
-2. Plays a bell sound at 50% volume as audio feedback
-3. Starts `arecord` in the background to record audio (max 60 seconds)
-4. Saves the process ID (PID) so the stop script can kill it
-5. Exits immediately, leaving recording running in background
+Save and exit.
 
 ---
 
-### 5.2 Create the STOP script
+### 5.3 Create the stop script
 
-Open a new script in `nano`:
+Open a new script:
 
  ```sh
 nano ~/Scripts/stop_whisper_simple.sh
  ```
 
-Paste this content:
+Paste this:
 
  ```sh
 #!/usr/bin/env bash
@@ -692,7 +572,7 @@ fi
 rm -f "$PIDFILE"
 
 # Play stop sound (optional - comment out if you don't want it)
-paplay --volume=32768 /usr/share/sounds/freedesktop/stereo/bell.oga 2>/dev/null || true
+paplay --volume=34406 /usr/share/sounds/freedesktop/stereo/bell.oga 2>/dev/null || true
 
 # Check if we have an audio file to transcribe
 if [ ! -f "$AUDIO_FILE" ] || [ ! -s "$AUDIO_FILE" ]; then
@@ -704,7 +584,7 @@ echo "Transcribing..."
 
 # Transcribe with Whisper
 whisper-ctranslate2 \
-    --model base \
+    --model small \
     --language en \
     --device cpu \
     --threads 8 \
@@ -719,7 +599,9 @@ if [ ! -f "$TEXT_FILE" ]; then
 fi
 
 # Get the transcript
-TRANSCRIPT="$(cat "$TEXT_FILE")"
+TRANSCRIPT="$(cat "$TEXT_FILE" | tr '\n' ' ')"
+TRANSCRIPT="${TRANSCRIPT## }"  # Remove leading spaces
+TRANSCRIPT="${TRANSCRIPT%% }"  # Remove trailing spaces
 
 if [ -z "$TRANSCRIPT" ]; then
     echo "Warning: Transcript is empty."
@@ -738,130 +620,56 @@ rm -f "$AUDIO_FILE" "$TEXT_FILE"
 echo "Done."
  ```
 
-Save and exit:
-
-* **Ctrl+O**, **Enter**
-* **Ctrl+X**
-
-Make it executable:
-
- ```sh
-chmod +x ~/Scripts/stop_whisper_simple.sh
- ```
-
-**What this script does:**
-
-1. Checks if a recording is in progress
-2. Kills the `arecord` process to stop recording
-3. Plays a bell sound as audio feedback
-4. Verifies the audio file exists and has content
-5. Transcribes using Whisper with the cached model (offline mode)
-6. Types the transcript into whatever window has focus
-7. Cleans up all temporary files
-
-**Critical performance fix:** The line `export HF_HUB_OFFLINE=1` forces Whisper to use the cached model without checking Hugging Face servers online. Without this line, transcription takes 25+ seconds. With it, transcription takes 2-3 seconds.
+Save and exit.
 
 ---
 
-### 5.3 Test the scripts manually (before hotkeys)
-
-Before binding to hotkeys, test manually to verify everything works:
-
-1. Open any text editor (gedit, xed, LibreOffice Writer, etc.)
-2. Click in the text field so your cursor is positioned
-3. In a terminal, run:
+### 5.4 Make both scripts executable
 
  ```sh
-~/Scripts/start_whisper_simple.sh
+chmod +x ~/Scripts/start_whisper_simple.sh ~/Scripts/stop_whisper_simple.sh
  ```
-
-You should hear a bell sound and see: `Recording started (PID: xxxx)`
-
-4. Speak for 5-10 seconds
-5. Run:
-
- ```sh
-~/Scripts/stop_whisper_simple.sh
- ```
-
-You should:
-
-* Hear another bell sound
-* See: `Transcribing...`
-* See: `Transcript: [your words]`
-* See: `Typing into active window...`
-* See the text appear in your text editor
-
-If this works, proceed to hotkey setup.
 
 ---
 
-### 5.4 Set up keyboard shortcuts
+### 5.5 Bind the hotkeys in Cinnamon
 
-Open Keyboard Settings from the terminal:
+Open **Cinnamon Settings** → **Keyboard** → **Shortcuts** → **Custom Shortcuts**.
 
- ```sh
-cinnamon-settings keyboard
- ```
+**Add hotkey 1: Start recording**
 
-Then:
+1. Click **+**
+2. Name: `Whisper Start`
+3. Command: `bash -lc "~/Scripts/start_whisper_simple.sh"`
+4. Shortcut: **Ctrl+Alt+Q**
+5. Click **Add**
 
-1. Click the **Shortcuts** tab
-2. In the left "Categories" pane, click **Custom Shortcuts**
-3. Click **Add custom shortcut**
+**Add hotkey 2: Stop and transcribe**
 
-#### Create the START shortcut
-
-In the dialog:
-
-* **Name:** `Whisper Start Recording`
-* **Command:** `bash -lc "~/Scripts/start_whisper_simple.sh"`
-* Click **Add**
-
-Now bind it to a key:
-
-1. Click on the word **unassigned** next to "Whisper Start Recording"
-2. When prompted, press: **Ctrl + Alt + Q**
-3. You should see it change to: `Ctrl+Alt+Q`
-
-#### Create the STOP shortcut
-
-Click **Add custom shortcut** again.
-
-In the dialog:
-
-* **Name:** `Whisper Stop and Transcribe`
-* **Command:** `bash -lc "~/Scripts/stop_whisper_simple.sh"`
-* Click **Add**
-
-Now bind it to a key:
-
-1. Click on the word **unassigned** next to "Whisper Stop and Transcribe"
-2. When prompted, press: **Ctrl + Alt + Z**
-3. You should see it change to: `Ctrl+Alt+Z`
-
-Close the Keyboard Settings window. Your hotkeys are now active.
+1. Click **+**
+2. Name: `Whisper Stop`
+3. Command: `bash -lc "~/Scripts/stop_whisper_simple.sh"`
+4. Shortcut: **Ctrl+Alt+Z**
+5. Click **Add**
 
 ---
 
-### 5.5 Using the hotkey dictation system
+### 5.6 How to use it
 
-**Basic workflow:**
+Focus your cursor into any text field:
 
-1. Click in any text field where you want the dictation to appear:
-   * ChatGPT or Claude web interface
-   * LibreOffice Writer
-   * Google Docs
-   * Any text editor
-   * Any browser text field
-   * Terminal applications
+* ChatGPT / Claude web interface
+* LibreOffice Writer
+* Google Docs
+* VS Code editor
+* Any other text field in any application
 
-2. Press **Ctrl+Alt+Q** to start recording
+1. Press **Ctrl+Alt+Q** to start recording
    * You'll hear a bell sound
    * Recording begins immediately
    * You can speak for up to 60 seconds
 
-3. When done speaking, press **Ctrl+Alt+Z** to stop
+2. When done speaking, press **Ctrl+Alt+Z** to stop
    * You'll hear another bell sound
    * Whisper transcribes your audio (1-2 seconds)
    * Text is automatically typed into your active window
@@ -876,7 +684,7 @@ Close the Keyboard Settings window. Your hotkeys are now active.
 
 ---
 
-### 5.6 Performance notes
+### 5.7 Performance notes
 
 **Transcription speed:**
 
@@ -910,9 +718,9 @@ Offline mode simply tells Whisper to use this cache without verifying online.
 
 ---
 
-### 5.7 Adjusting bell sound volume
+### 5.8 Adjusting bell sound volume
 
-The bell sounds use `--volume=32768` which is 50% system volume. If this is:
+The bell sounds use `--volume=34406` which is 52.5% system volume. If this is:
 
 **Too loud:** Change both scripts to use a lower volume:
 
@@ -936,7 +744,7 @@ The volume scale is:
 
 ---
 
-### 5.8 Cleanup: Remove old test scripts
+### 5.9 Cleanup: Remove old test scripts
 
 If you followed earlier sections, you may have old test scripts that are no longer needed. Keep only these three Whisper scripts:
 
@@ -963,7 +771,7 @@ The new scripts automatically clean up their own temp files in `/tmp` after each
 
 ---
 
-### 5.9 Troubleshooting
+### 5.10 Troubleshooting
 
 **Problem: Bell sound doesn't play**
 
@@ -1016,7 +824,7 @@ If your microphone is not the default device, you may need to specify the device
 
 ---
 
-### 5.10 Future enhancements
+### 5.11 Future enhancements
 
 Possible improvements to consider:
 
@@ -1045,6 +853,7 @@ You now have a complete local Whisper dictation system with multiple usage modes
 
 All scripts use local processing - no internet required for transcription. The system works in any application on your Linux Mint system.
 
+---
 
 ## Additional Notes: Switching Models and Performance Tips
 
@@ -1053,16 +862,18 @@ All scripts use local processing - no internet required for transcription. The s
 If you want to experiment with different Whisper models (`tiny`, `base`, `small`, `medium`, or `large-v3`), you can do so by editing your transcription script (`stop_whisper_simple.sh`).
 
 Look for the `--model` line in the transcription command:
+
 ```sh
 whisper-ctranslate2 \
-  --model base \
+  --model small \
   --language en \
   ...
 ```
 
 To try a different model, simply change the `--model` argument. For example:
+
 ```sh
---model small
+--model medium
 ```
 
 ### First-Time Use of a New Model
@@ -1070,11 +881,13 @@ To try a different model, simply change the `--model` argument. For example:
 Each model must be downloaded the first time you use it. Because these models are large (e.g. `small` is ~244 MB, `medium` is ~769 MB), the first run will take longer while the model is downloaded from Hugging Face.
 
 To allow this download, make sure offline mode is disabled during that first run:
+
 ```sh
 # export HF_HUB_OFFLINE=1
 ```
 
 Once the model is cached locally, you can re-enable offline mode:
+
 ```sh
 export HF_HUB_OFFLINE=1
 ```
@@ -1086,6 +899,7 @@ Transcription with the new model will then be just as fast as your previous one,
 If you're interested in comparing how different models perform on your system, you can add timing logic to your script.
 
 Here's an example using `date`:
+
 ```sh
 START=$(date +%s)
 
@@ -1112,11 +926,13 @@ You may notice that not all CPU cores are fully used, even if you set `--threads
 * Longer recordings (30+ seconds) or larger models (`medium`, `large-v3`) tend to scale CPU usage more effectively.
 
 To monitor live CPU usage:
+
 ```sh
 htop
 ```
 
 Or:
+
 ```sh
 top
 ```
@@ -1133,4 +949,118 @@ Look for how many cores spike during transcription, and how long they stay activ
 | `medium` | 769 MB | Very good | Slower |
 | `large-v3` | 1.5 GB | Best | Slowest |
 
-Choose a model based on your balance of speed vs. transcription quality. For real-time use, `base` or `small` offer the best trade off.
+Choose a model based on your balance of speed vs. transcription quality. For real-time use, `base` or `small` offer the best tradeoff.
+
+---
+
+## Model Selection: Real-World Testing vs. Assumptions
+
+### The Flawed Assumption: "Bigger = Better and Faster"
+
+A common assumption when choosing ML models is that larger models are always faster and more accurate. **This assumption is wrong**, especially on CPU-only systems. The only way to know is to test on your actual hardware.
+
+### Your Test Setup
+
+- **Hardware:** Linux Mint 22.2 on a 22-core laptop, CPU-only (no GPU)
+- **Test audio:** Three sentences (~40 words), consistent phrasing
+- **Measurement:** Wall-clock transcription time + core utilization (htop)
+- **Models tested:** small, medium, large-v3
+
+### Test Results
+
+| Model | Time | Cores Used | Consistency | Accuracy |
+|-------|------|-----------|--------------|----------|
+| **small** | 13.9 seconds | Moderate (8 engaged) | **Reliable** ✓ | Excellent |
+| **medium** | 11.53–18.38 seconds | Full (but inefficient) | **Inconsistent** ✗ | Excellent |
+| **large-v3** | 28.6 seconds | Full (sustained) | Reliable | Perfect |
+
+### Key Finding: Small Model Wins
+
+Small was **both fastest and most consistent**:
+
+- **First run:** 13.9 seconds (predictable)
+- **Retest:** 13.9 seconds (identical)
+- **CPU pattern:** Steady, moderate engagement across 8 threads
+- **No variance:** No system noise, no surprises
+
+Medium showed unpredictability:
+
+- **First run:** 11.53 seconds (looked promising)
+- **Retest:** 18.38 seconds (50% slower, different result)
+- **CPU pattern:** Inefficient core utilization with overhead
+- **Transcript degradation:** Second run had transcription errors ("is revolutionized" instead of "has revolutionized")
+
+Large-v3 was predictably slow:
+
+- **Consistent:** 28.6 seconds every run
+- **Accuracy:** Perfect transcription
+- **Cost:** 2x slower than small, requires 1.5 GB model download
+- **Verdict:** Overkill for interactive dictation
+
+### Why "Bigger" Doesn't Mean "Faster" on CPU
+
+The official Whisper documentation indicates small to medium is "a 3x increase in model size for maybe 2% more accuracy in English."
+
+On CPU-only systems:
+
+1. **Larger models = more parameters to compute** — not automatically faster with naive threading
+2. **Threading overhead increases** — managing more threads across 8 available slots causes contention, not parallelism
+3. **Memory bandwidth becomes the bottleneck** — CPU cores idle waiting for parameter loads
+4. **Optimization is architecture-specific** — `small` model is architected for this CPU/threading sweet spot
+
+### Recommendation for Interactive Dictation
+
+**Use `--model small` with `--threads 8`**
+
+- 13.9-second transcription feel snappy for live typing
+- Consistent, predictable performance (no surprises)
+- Excellent accuracy for everyday English
+- Frees up your 22 cores efficiently (no thrashing)
+
+If you need absolute maximum accuracy and don't mind waiting: use `large-v3`. For everything else: small is the winner.
+
+### The Lesson
+
+Always test on your actual hardware before assuming model size = speed. Theory and benchmarks (which often use A100 GPUs) don't transfer to CPU-only laptops.
+
+---
+
+## Updating whisper-ctranslate2
+
+### Check Your Current Version
+
+To see which version of whisper-ctranslate2 you have installed:
+
+```sh
+pipx list | grep whisper
+```
+
+You can also check the version directly from the tool itself:
+
+```sh
+whisper-ctranslate2 --version
+```
+
+### Upgrade to the Latest Version
+
+To upgrade to the latest version:
+
+```sh
+pipx upgrade whisper-ctranslate2
+```
+
+This will check for a newer version on PyPI and install it if available.
+
+### Check Before Upgrading (Dry Run)
+
+If you want to see what would be upgraded without actually doing it:
+
+```sh
+pipx upgrade whisper-ctranslate2 --dry-run
+```
+
+This shows you the version change without making any changes to your system.
+
+### What's New in Recent Versions
+
+The latest version is 0.5.7 (released Feb 8, 2026). For a detailed list of changes and bug fixes in each release, visit the official releases page at: https://github.com/Softcatala/whisper-ctranslate2/releases
