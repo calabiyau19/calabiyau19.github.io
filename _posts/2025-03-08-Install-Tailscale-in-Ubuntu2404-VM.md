@@ -12,6 +12,9 @@ Scenario: Ubuntu 24.04 server running in a VM on a proxmox host
 
 ```sh
 sudo mkdir -p --mode=0755 /usr/share/keyrings
+```
+
+```sh
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
 ```
 
